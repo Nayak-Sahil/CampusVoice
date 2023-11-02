@@ -18,7 +18,7 @@ export default function AuthOpts() {
             </div>
             <div className={authstyle.authOpt}>
                 <AuthCard role="Student" image={student} descrp="Students can ask queries and track query activity."/>
-                <AuthCard role="Query Solver" image={querySolver} descrp="Query Solvers can assist students by resolving queries."/>
+                <AuthCard role="Query Resolver" image={querySolver} descrp="Query Solvers can assist students by resolving queries."/>
             </div>
             <p className={authstyle.authWarn}>By Continuing, You agree to CampusVoice's <Link href='/' >Terms & Conditions</Link> & <Link href='/'>Privacy Policy</Link></p>
         </div>
@@ -31,7 +31,7 @@ function AuthCard({role, descrp, image}){
             <h2>Login as <span className={authstyle.highlight}>{role}</span></h2>
             <p><FontAwesomeIcon icon={faLightbulb} width={12} color='var(--primary)'></FontAwesomeIcon> {descrp}</p>
             <Image src={image} alt={role} draggable="false" width={(image == querySolver) ? 160: 190}></Image>
-            <button>Login <FontAwesomeIcon icon={faArrowRightFromBracket} width={15}></FontAwesomeIcon></button>
+            <button><Link href={`/Account/${role.toString().split(" ").join("")}`}>Login <FontAwesomeIcon icon={faArrowRightFromBracket} width={15}></FontAwesomeIcon></Link></button>
         </div>
     )
 }

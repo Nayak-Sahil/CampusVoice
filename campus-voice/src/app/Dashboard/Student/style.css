@@ -1,0 +1,53 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+@import url('https://fonts.googleapis.com/css?family=Karla:400,700&display=swap');
+
+:root {
+    --primary: #23B679;
+    --secondary: ;
+    --descrp: rgb(80, 80, 80);
+    --brdr: rgba(234, 234, 234, 0.846);
+}
+
+.font-family-karla {
+    font-family: karla;
+}
+
+.bg-sidebar {
+    background: #ffffff;
+}
+
+.cta-btn {
+    color: var(--primary);
+}
+
+.upgrade-btn {
+    background: var(--primary);
+}
+
+.active-nav-link {
+    background: var(--primary);
+    color: white;
+}
+.nav-item {
+    cursor: pointer;
+    font-size: 15px;
+}
+.nav-item svg{
+    margin-right: 8px;
+}
+.nav-item:hover {
+    background: rgb(237, 237, 237);
+    color: rgb(18, 18, 18);
+}
+
+.account-link:hover {
+    background: var(--primary);
+    color: white;
+}
+
+.log-out svg{
+    transform: rotate(180deg);
+    margin-right: 8px;
+}
