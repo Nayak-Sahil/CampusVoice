@@ -23,7 +23,7 @@ const page = () => {
 
                   <div className="w-full mt-[200px] min-[400px]:mt-[400px] md:w-1/2 lg:w-2/5 bg-campus-light p-6 md:p-8 rounded-lg shadow-2xl">
                       <div className="flex justify-center mb-6">
-                          <Image src={logo} width={200}  />
+                          <Image src={logo} width={200} alt='logo' />
                       </div>
 
                       <h1 className="text-xl md:text-2xl font-bold mb-6 text-center text-campus-dark">Welcome, Informant</h1>
