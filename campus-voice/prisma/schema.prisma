@@ -8,8 +8,17 @@ datasource db {
 }
 
 model user_auth {
-  uid      String  @id @db.VarChar(20)
-  password String @db.VarChar(255)
-  role     String @db.VarChar(20)
-  modifyAt DateTime @db.Date
+  uid       String     @id @db.VarChar(20)
+  password  String     @db.VarChar(255)
+  modifyAt  DateTime   @updatedAt @db.Date
+  createdAt DateTime   @updatedAt @db.Date
+  userInfo  user_info?
+}
+
+model user_info {
+  uid String    @id @db.VarChar(20)
+  email  String    @unique @db.VarChar(255)
+  name   String    @db.VarChar(255)
+  image  String    @db.VarChar(255)
+  user   user_auth @relation(fields: [uid], references: [uid])
 }

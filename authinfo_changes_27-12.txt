@@ -1,0 +1,48 @@
+uid - abbccddd
+a = type of user
+b = department
+c = year of enrollment
+d = serial number
+
+auth table -
+- userid (primary key)
+- password 
+
+stdt table -
+- userid (foreign key)
+- enrollment (primary key)
+
+fclt table -
+- userid
+- email
+
+info table -
+- userid (foreign key)
+- email
+- name
+- image
+
+usrtype table-
+- userid (except students)
+- types of query solved by entity (catagory id)
+
+query ctgr table - 
+- catagory id
+- catagory name
+- catagory discription
+
+track_query - 
+- queryid
+- senderid
+- receiverid
+- query catagory
+- query title
+- query description
+- query type (global or local)
+- identity (disabled or enabled)
+- query status (sent, pending, processing, resolved)
+
+query_images - 
+- queryid
+- image
+

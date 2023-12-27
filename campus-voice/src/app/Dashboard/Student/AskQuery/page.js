@@ -34,8 +34,8 @@ export default function page() {
                                     <span class="hidden h-8 w-8 items-center justify-center rounded-full bg-white text-blue-700 shadow md:inline-flex">4</span>
                                     <span class="hidden text-gray-600 md:inline">Send</span>
                                     <span class="text-xl md:hidden"
-                                    ><svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="h-3 w-3">
-                                            <path stroke-linecap="round" strokeLinejoin="round" d="M8.25 4.5l7.5 7.5-7.5 7.5" />
+                                    ><svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" strokeWidth="1.5" stroke="currentColor" class="h-3 w-3">
+                                            <path strokeLinecap="round" strokeLinejoin="round" d="M8.25 4.5l7.5 7.5-7.5 7.5" />
                                         </svg>
                                     </span>
                                 </div>
@@ -46,18 +46,18 @@ export default function page() {
                                     <div class="mt-4 flex flex-col items-center w-full">
                                         <div className="w-full mb-1 flex justify-between sm:col-span-3">
                                             <div class="w-[68%] mb-3 flex flex-col sm:col-span-3">
-                                                <label class="mb-2 font-semibold text-gray-500" for="">Regarding</label>
+                                                <label class="mb-2 font-semibold text-gray-500" htmlFor="">Regarding</label>
                                                 <input class="appearance-none border w-full rounded-lg border px-2 py-2 shadow-sm text-gray-700 leading-tight focus:outline-none focus:ring focus:shadow-outline" id="username" type="text" placeholder="Express Your Complaint" />
                                             </div>
                                             <div class="w-[30%] mb-3 flex flex-col sm:col-span-3">
-                                                <label class="mb-2 font-semibold text-gray-500" for="">Category</label>
+                                                <label class="mb-2 font-semibold text-gray-500" htmlFor="">Category</label>
                                                 <select class="rounded-lg border px-2 py-2 shadow-sm outline-none focus:ring pr-5" name="" id="">
                                                     <option value="French Toast">Select</option>
                                                 </select>
                                             </div>
                                         </div>
                                         <div class="w-full mb-1 flex flex-col sm:col-span-3">
-                                            <label class="mb-2 font-semibold text-gray-500" for="">Message</label>
+                                            <label class="mb-2 font-semibold text-gray-500" htmlFor="">Message</label>
                                             <textarea class="appearance-none border w-full rounded-lg border px-2 py-2 shadow-smtext-gray-700 leading-tight focus:outline-none focus:shadow-outline" id="username" type="text" placeholder="Message... ..." rows="12"></textarea>
                                         </div>
                                     </div>
@@ -65,8 +65,8 @@ export default function page() {
                                         <button class="group order-1 my-2 flex w-full items-center justify-center rounded-lg bg-gray-200 py-2 text-center font-bold text-gray-600 outline-none transition sm:w-40 focus:ring hover:bg-gray-300">Cancel</button>
                                         <button class="group my-2 flex w-full items-center justify-center rounded-lg bg-blue-700 py-2 text-center font-bold text-white outline-none transition sm:order-1 sm:w-40 focus:ring">
                                             Continue
-                                            <svg xmlns="http://www.w3.org/2000/svg" class="group-hover:translate-x-2 ml-4 h-4 w-4 transition-transform" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2">
-                                                <path stroke-linecap="round" strokeLinejoin="round" d="M14 5l7 7m0 0l-7 7m7-7H3" />
+                                            <svg xmlns="http://www.w3.org/2000/svg" class="group-hover:translate-x-2 ml-4 h-4 w-4 transition-transform" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth="2">
+                                                <path strokeLinecap="round" strokeLinejoin="round" d="M14 5l7 7m0 0l-7 7m7-7H3" />
                                             </svg>
                                         </button>
                                     </div>
