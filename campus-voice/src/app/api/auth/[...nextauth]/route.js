@@ -66,6 +66,9 @@ export const authOptions = {
             }
         })
     ],
+    pages: {
+        signIn: '/Account'
+    },
     secret: process.env.NEXTAUTH_SECRET,
     session: {
         jwt: true

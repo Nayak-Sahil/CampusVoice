@@ -1,9 +1,12 @@
+'use client'
 import React from 'react'
 import Image from 'next/image'
 import logo from '../../../public/CampusVoice.png'
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
-import { faArrowRightFromBracket, faCircleQuestion, faGraduationCap, faListCheck, faPaperPlane, faTableColumns, faUserGroup } from '@fortawesome/free-solid-svg-icons'
+import {  faCircleQuestion, faListCheck, faPaperPlane, faTableColumns, faUserGroup } from '@fortawesome/free-solid-svg-icons'
+import { signOut } from 'next-auth/react'
 import '../../app/Dashboard/Student/style.css'
+import LogoutBtn from './LogoutBtn'
 export default function Sidebar({ activeList }) {
     return (
         <aside className="relative bg-sidebar h-screen w-64 hidden sm:block shadow-xl">
@@ -35,10 +38,7 @@ export default function Sidebar({ activeList }) {
                     Help/Support
                 </a>
             </nav>
-            <a href="#" className="text-base font-semibold log-out absolute w-full upgrade-btn bottom-0 active-nav-link flex items-center justify-center py-4 nav-item cursor-auto">
-                <FontAwesomeIcon icon={faArrowRightFromBracket} width={15}></FontAwesomeIcon>
-                Log out
-            </a>
+            <LogoutBtn />
         </aside>
     )
 }
