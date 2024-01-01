@@ -7,3 +7,4 @@ for queryResolver login
 
 for student
 01623001 - arjav1234
+01623002 - random1234

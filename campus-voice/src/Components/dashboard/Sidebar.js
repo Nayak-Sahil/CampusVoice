@@ -7,6 +7,7 @@ import {  faCircleQuestion, faListCheck, faPaperPlane, faTableColumns, faUserGro
 import { signOut } from 'next-auth/react'
 import '../../app/Dashboard/Student/style.css'
 import LogoutBtn from './LogoutBtn'
+import Link from 'next/link'
 export default function Sidebar({ activeList }) {
     return (
         <aside className="relative bg-sidebar h-screen w-64 hidden sm:block shadow-xl">
@@ -17,26 +18,26 @@ export default function Sidebar({ activeList }) {
                     </button> */}
             </div>
             <nav className="text-black text-base font-semibold pt-3">
-                <a href="index.html" className={`flex items-center ${(activeList == 1) ? 'active-nav-link' : 'opacity-75'} text-black py-4 pl-6 nav-item cursor-auto`}>
+                <Link href="/" className={`flex items-center ${(activeList == 1) ? 'active-nav-link' : 'opacity-75'} text-black py-4 pl-6 nav-item cursor-auto`}>
                     <FontAwesomeIcon icon={faTableColumns} width={15}></FontAwesomeIcon>
-                    Dashboard
-                </a>
-                <a href="blank.html" className={`flex items-center ${(activeList == 2) ? 'active-nav-link' : 'opacity-75'} text-black hover:opacity-100 py-4 pl-6 nav-item cursor-auto`}>
+                    <p className="text-base font-normal">Dashboard</p>
+                </Link>
+                <Link href="/" className={`flex items-center ${(activeList == 2) ? 'active-nav-link' : 'opacity-75'} text-black hover:opacity-100 py-4 pl-6 nav-item cursor-auto`}>
                     <FontAwesomeIcon icon={faPaperPlane} width={15}></FontAwesomeIcon>
-                    Ask Query
-                </a>
-                <a href="tables.html" className={`flex items-center ${(activeList == 3) ? 'active-nav-link' : 'opacity-75'} text-black hover:opacity-100 py-4 pl-6 nav-item cursor-auto`}>
+                    <p className="text-base font-normal">Ask Query</p> 
+                </Link>
+                <Link href="/" className={`flex items-center ${(activeList == 3) ? 'active-nav-link' : 'opacity-75'} text-black hover:opacity-100 py-4 pl-6 nav-item cursor-auto`}>
                     <FontAwesomeIcon icon={faListCheck} width={15}></FontAwesomeIcon>
-                    Track
-                </a>
-                <a href="forms.html" className={`flex items-center ${(activeList == 4) ? 'active-nav-link' : 'opacity-75'} text-black hover:opacity-100 py-4 pl-6 nav-item cursor-auto`}>
+                    <p className="text-base font-normal">Track</p>
+                </Link>
+                <Link href="/" className={`flex items-center ${(activeList == 4) ? 'active-nav-link' : 'opacity-75'} text-black hover:opacity-100 py-4 pl-6 nav-item cursor-auto`}>
                     <FontAwesomeIcon icon={faUserGroup} width={15}></FontAwesomeIcon>
-                    View Other Query
-                </a>
-                <a href="tabs.html" className={`flex items-center ${(activeList == 5) ? 'active-nav-link' : 'opacity-75'} text-black hover:opacity-100 py-4 pl-6 nav-item cursor-auto`}>
+                    <p className="text-base font-normal">View Other Query</p> 
+                </Link>
+                <Link href="/" className={`flex items-center ${(activeList == 5) ? 'active-nav-link' : 'opacity-75'} text-black hover:opacity-100 py-4 pl-6 nav-item cursor-auto`}>
                     <FontAwesomeIcon icon={faCircleQuestion} width={15}></FontAwesomeIcon>
-                    Help/Support
-                </a>
+                    <p className="text-base font-normal">Help Support</p>
+                </Link>
             </nav>
             <LogoutBtn />
         </aside>

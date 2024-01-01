@@ -1,6 +1,7 @@
 import { Inter } from 'next/font/google'
 import './globals.css'
 import { League_Spartan } from 'next/font/google'
+import { QueryState } from '@/Contexts/QueryState'
 
 // const inter = Inter({ subsets: ['latin'] })
 
@@ -17,7 +18,7 @@ export const metadata = {
 export default function RootLayout({ children }) {
   return (
     <html lang="en">
-        <body className={league_spartan.className}>{children}</body>
+        <body className={league_spartan.className}><QueryState>{children}</QueryState></body>
     </html>
   )
 }

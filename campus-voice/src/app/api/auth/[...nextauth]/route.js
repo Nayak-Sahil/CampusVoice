@@ -54,6 +54,7 @@ export const authOptions = {
                         }else{
                             role = "resolver";
                         }
+                        console.log(hashpass, user.uid)
                         return {
                             uid:user.uid,
                             role:role

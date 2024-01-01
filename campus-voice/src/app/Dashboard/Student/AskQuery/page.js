@@ -1,14 +1,25 @@
-import React from 'react'
-import Image from 'next/image'
-import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
-import { faPaperPlane } from '@fortawesome/free-solid-svg-icons'
-import { faCircleCheck } from '@fortawesome/free-regular-svg-icons'
+"use client"
+import React, { useContext } from 'react'
+// import Image from 'next/image'
+// import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
+// import { faPaperPlane } from '@fortawesome/free-solid-svg-icons'
+// import { faCircleCheck } from '@fortawesome/free-regular-svg-icons'
 import Sidebar from '@/Components/dashboard/Sidebar'
 import Navbar from '@/Components/dashboard/Navbar'
 import MobileNav from '@/Components/dashboard/MobileNav'
 import '../style.css'
+import WriteQuery from '@/Components/student/WriteQuery'
+import Destination from '@/Components/student/Destination'
+import Identity from '@/Components/student/Identity'
+import SendQuery from '@/Components/student/SendQuery'
+import QueryContext from '@/Contexts/QueryContext'
 
 export default function page() {
+
+    const contextQuery = useContext(QueryContext);
+    console.log(contextQuery)
+    const currentformState = contextQuery.queryData.FormState;
+
     return (
         <div className='bg-gray-50 flex'>
             <Sidebar activeList="2" />
@@ -40,37 +51,9 @@ export default function page() {
                                     </span>
                                 </div>
 
-                                <div class="flex w-full flex-col">
-                                    <h1 class="text-2xl font-semibold">Convey Your Query </h1>
-                                    <p class="mt-2 text-gray-500">Please feel free to express your query and ask any question. <span className='text-[#23B679] font-semibold'>Don't worry, you can mask your identity.</span></p>
-                                    <div class="mt-4 flex flex-col items-center w-full">
-                                        <div className="w-full mb-1 flex justify-between sm:col-span-3">
-                                            <div class="w-[68%] mb-3 flex flex-col sm:col-span-3">
-                                                <label class="mb-2 font-semibold text-gray-500" htmlFor="">Regarding</label>
-                                                <input class="appearance-none border w-full rounded-lg border px-2 py-2 shadow-sm text-gray-700 leading-tight focus:outline-none focus:ring focus:shadow-outline" id="username" type="text" placeholder="Express Your Complaint" />
-                                            </div>
-                                            <div class="w-[30%] mb-3 flex flex-col sm:col-span-3">
-                                                <label class="mb-2 font-semibold text-gray-500" htmlFor="">Category</label>
-                                                <select class="rounded-lg border px-2 py-2 shadow-sm outline-none focus:ring pr-5" name="" id="">
-                                                    <option value="French Toast">Select</option>
-                                                </select>
-                                            </div>
-                                        </div>
-                                        <div class="w-full mb-1 flex flex-col sm:col-span-3">
-                                            <label class="mb-2 font-semibold text-gray-500" htmlFor="">Message</label>
-                                            <textarea class="appearance-none border w-full rounded-lg border px-2 py-2 shadow-smtext-gray-700 leading-tight focus:outline-none focus:shadow-outline" id="username" type="text" placeholder="Message... ..." rows="12"></textarea>
-                                        </div>
-                                    </div>
-                                    <div class="flex flex-col justify-between sm:flex-row">
-                                        <button class="group order-1 my-2 flex w-full items-center justify-center rounded-lg bg-gray-200 py-2 text-center font-bold text-gray-600 outline-none transition sm:w-40 focus:ring hover:bg-gray-300">Cancel</button>
-                                        <button class="group my-2 flex w-full items-center justify-center rounded-lg bg-blue-700 py-2 text-center font-bold text-white outline-none transition sm:order-1 sm:w-40 focus:ring">
-                                            Continue
-                                            <svg xmlns="http://www.w3.org/2000/svg" class="group-hover:translate-x-2 ml-4 h-4 w-4 transition-transform" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth="2">
-                                                <path strokeLinecap="round" strokeLinejoin="round" d="M14 5l7 7m0 0l-7 7m7-7H3" />
-                                            </svg>
-                                        </button>
-                                    </div>
-                                </div>
+                                {
+                                    (currentformState == "WRITE") ? <WriteQuery /> : (currentformState == "READ_DESTINATION") ? <Destination /> : (currentformState == "MASK_IDENTITY") ? <Identity /> : (currentformState == "SEND") ? <SendQuery /> : ""
+                                }
                             </div>
                         </section>
                     </main>

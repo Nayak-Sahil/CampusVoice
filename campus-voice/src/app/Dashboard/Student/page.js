@@ -1,7 +1,5 @@
 import React from 'react'
 import './style.css'
-import Image from 'next/image'
-import logo from '../../../../public/CampusVoice.png'
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
 import { faPaperPlane } from '@fortawesome/free-solid-svg-icons'
 import { faCircleCheck } from '@fortawesome/free-regular-svg-icons'
