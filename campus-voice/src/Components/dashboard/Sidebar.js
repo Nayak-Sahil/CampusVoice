@@ -22,7 +22,7 @@ export default function Sidebar({ activeList }) {
                     <FontAwesomeIcon icon={faTableColumns} width={15}></FontAwesomeIcon>
                     <p className="text-base font-normal">Dashboard</p>
                 </Link>
-                <Link href="/" className={`flex items-center ${(activeList == 2) ? 'active-nav-link' : 'opacity-75'} text-black hover:opacity-100 py-4 pl-6 nav-item cursor-auto`}>
+                <Link href="/Dashboard/Student/AskQuery" className={`flex items-center ${(activeList == 2) ? 'active-nav-link' : 'opacity-75'} text-black hover:opacity-100 py-4 pl-6 nav-item cursor-auto`}>
                     <FontAwesomeIcon icon={faPaperPlane} width={15}></FontAwesomeIcon>
                     <p className="text-base font-normal">Ask Query</p> 
                 </Link>

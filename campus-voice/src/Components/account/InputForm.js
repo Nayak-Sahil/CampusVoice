@@ -9,7 +9,7 @@ const InputForm = () => {
     const [loading, setLoading] = useState(false);
     async function handleSubmit(e) {
         setLoading(true)
-        const res = await signIn('credentials', { uid: e.get("uid"), password: e.get('password'), redirect: false });
+        const res = await signIn('credentials', { uid: e.get("uid"), password: e.get('password'), redirect: false});
         if(!res.ok && res.status !== 200){
             setTimeout(() => {
               setAlertMsg("");
@@ -31,7 +31,7 @@ const InputForm = () => {
     <form action={handleSubmit}>
               <div className="mb-4">
                 <label htmlFor="uid" className="block text-sm mb-2">Resolver ID:</label>
-                <input name='uid' type="text" id="uid" className="w-full p-3 border border-campus-dark rounded-md focus:outline-none focus:border-campus-green" placeholder="Enter your Resolver ID" />
+                <input name='uid' type="text" id="uid" className="w-full p-3 border border-campus-dark rounded-md focus:outline-none focus:border-campus-green" placeholder="Enter your UID" />
               </div>
 
               <div className="mb-4">

@@ -29,25 +29,25 @@ export default function WriteQuery() {
 
 
   return (
-    <form class="flex w-full flex-col" onSubmit={handleSubmit}>
-      <h1 class="text-2xl font-semibold">Convey Your Query </h1>
-      <p class="mt-2 text-gray-500">
+    <form className="flex w-full flex-col" onSubmit={handleSubmit}>
+      <h1 className="text-2xl font-semibold">Convey Your Query </h1>
+      <p className="mt-2 text-gray-500">
         Please feel free to express your query and ask any question.{" "}
         <span className="text-[#23B679] font-semibold">
           Don't worry, you can mask your identity.
         </span>
       </p>
-      <div class="mt-4 flex flex-col items-center w-full">
+      <div className="mt-4 flex flex-col items-center w-full">
         <div className="w-full mb-1 flex justify-between sm:col-span-3">
-          <div class="w-[68%] mb-3 flex flex-col sm:col-span-3">
+          <div className="w-[68%] mb-3 flex flex-col sm:col-span-3">
             <label
               htmlFor="QueryTitle"
-              class="mb-2 text-gray-800"
+              className="mb-2 text-gray-800"
             >
               Regarding
             </label>
             <input
-              class="appearance-none border w-full rounded-lg border px-2 py-2 shadow-sm text-gray-700 leading-tight focus:outline-none focus:ring focus:shadow-outline"
+              className="appearance-none border w-full rounded-lg border px-2 py-2 shadow-sm text-gray-700 leading-tight focus:outline-none focus:ring focus:shadow-outline"
               name="QueryTitle"
               id="QueryTitle"
               type="text"
@@ -58,15 +58,15 @@ export default function WriteQuery() {
             />
             {touched.QueryTitle && errors.QueryTitle ? <p className="mt-2 text-red-500">{errors.QueryTitle}</p> : ""}
           </div>
-          <div class="w-[30%] mb-3 flex flex-col sm:col-span-3">
+          <div className="w-[30%] mb-3 flex flex-col sm:col-span-3">
             <label
-              class="mb-2 text-gray-800"
+              className="mb-2 text-gray-800"
               htmlFor="QueryCategory"
             >
               Category
             </label>
             <select
-              class="rounded-lg border px-2 py-2 shadow-sm outline-none focus:ring pr-5"
+              className="rounded-lg border px-2 py-2 shadow-sm outline-none focus:ring pr-5"
               name="QueryCategory"
               id="QueryCategory"
               value={values.QueryCategory}
@@ -82,16 +82,16 @@ export default function WriteQuery() {
             {touched.QueryCategory && errors.QueryCategory ? <p className="mt-2 text-red-500">{errors.QueryCategory}</p> : ""}
           </div>
         </div>
-        <div class="w-full mb-1 flex flex-col sm:col-span-3">
+        <div className="w-full mb-1 flex flex-col sm:col-span-3">
           <label
-            class="mb-2 text-gray-800"
+            className="mb-2 text-gray-800"
             htmlFor="QueryDetails"
           >
             Message
           </label>
           {touched.QueryDetails && errors.QueryDetails ? <p className="mb-2 text-red-500">{errors.QueryDetails}</p> : ""}
           <textarea
-            class="appearance-none border w-full rounded-lg border px-2 py-2 shadow-smtext-gray-700 leading-tight focus:outline-none focus:ring focus:shadow-outline"
+            className="appearance-none border w-full rounded-lg border px-2 py-2 shadow-smtext-gray-700 leading-tight focus:outline-none focus:ring focus:shadow-outline"
             name="QueryDetails"
             id="QueryDetails"
             type="text"
@@ -103,21 +103,21 @@ export default function WriteQuery() {
           ></textarea>
         </div>
       </div>
-      <div class="flex flex-col justify-between sm:flex-row">
+      <div className="flex flex-col justify-between sm:flex-row">
         <button
           type="submit"
-          class="group order-1 my-2 flex w-full items-center justify-center rounded-lg bg-gray-200 py-2 text-center font-bold text-gray-600 outline-none transition sm:w-40 focus:ring hover:bg-gray-300"
+          className="group order-1 my-2 flex w-full items-center justify-center rounded-lg bg-gray-200 py-2 text-center font-bold text-gray-600 outline-none transition sm:w-40 focus:ring hover:bg-gray-300"
         >
           Cancel
         </button>
         <button
           type="submit"
-          class="group my-2 flex w-full items-center justify-center rounded-lg bg-blue-700 py-2 text-center font-bold text-white outline-none transition sm:order-1 sm:w-40 focus:ring"
+          className="group my-2 flex w-full items-center justify-center rounded-lg bg-blue-700 py-2 text-center font-bold text-white outline-none transition sm:order-1 sm:w-40 focus:ring"
         >
           Continue
           <svg
             xmlns="http://www.w3.org/2000/svg"
-            class="group-hover:translate-x-2 ml-4 h-4 w-4 transition-transform"
+            className="group-hover:translate-x-2 ml-4 h-4 w-4 transition-transform"
             fill="none"
             viewBox="0 0 24 24"
             stroke="currentColor"

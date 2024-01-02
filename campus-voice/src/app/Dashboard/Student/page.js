@@ -7,7 +7,7 @@ import Sidebar from '@/Components/dashboard/Sidebar'
 import Navbar from '@/Components/dashboard/Navbar'
 import MobileNav from '@/Components/dashboard/MobileNav'
 
-export default function page() {
+export default async function page() {
     return (
         <div className='bg-gray-100 flex'>
             <Sidebar activeList="1" />

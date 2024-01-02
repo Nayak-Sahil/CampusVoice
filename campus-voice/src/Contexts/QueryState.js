@@ -1,6 +1,7 @@
 "use client"
 import React, { useState } from "react";
 import QueryContext from "./QueryContext";
+import { useSession } from "next-auth/react";
 
 export const QueryState = (props) => {
   /**

@@ -34,8 +34,14 @@ export const authOptions = {
                             },
                         });
                         user = user.user;
+                        
                     } else if ((uidtype ===  1 || uidtype === 0 )&& numericUidRegEx.test(credentials.uid)) {
-                        user = await prisma_client.user_auth.findUnique({where:{uid:credentials.uid}});
+                        user = await prisma_client.user_auth.findUnique({
+                            where:{uid:credentials.uid},
+                            include:{
+                                userInfo:true
+                            }
+                        });
                     } else {
                         throw new Error("Please provide valid uid!")
                     }
@@ -53,11 +59,12 @@ export const authOptions = {
                             role = "student";
                         }else{
                             role = "resolver";
+                        
                         }
-                        console.log(hashpass, user.uid)
                         return {
                             uid:user.uid,
-                            role:role
+                            role:role,
+                            image:user.userInfo.image
                         }
                     }
                     throw new Error("Invalid user!");
@@ -95,6 +102,7 @@ export const authOptions = {
             if (account.provider === "credentials" && user) {
                 user.name = user.uid;
                 user.email = user.email
+                user.image = user.image
                 return true
             }
             return false;
@@ -119,29 +127,28 @@ export { handler as GET, handler as POST }
 
 //code for creating user
 
-// const pass = credentials.password + process.env.NEXTAUTH_PASSSECRET;
-//                     const hashPass = CryptoJS.SHA256(pass).toString(CryptoJS.enc.Hex);
-//                     const prisma = PrismaClientSend();
+                    // const hashPass = CryptoJS.SHA256("random1234"+process.env.NEXTAUTH_PASSSECRET).toString(CryptoJS.enc.Hex);
+                    // const prisma = PrismaClientSend();
 
-//                     const user = await prisma.user_auth.create({
-//                         data : {
-//                             uid : credentials.uid,
-//                             password : hashPass,
-//                             modifyAt:new Date().toISOString(),
-//                             createdAt:new Date().toISOString()
-//                         }
-//                     })
-//                     if(user){
-//                         console.log(user);
-//                         prisma.$disconnect();
-//                         let role;
-//                         if(user.uid.charAt(0) === '0'){
-//                             role = "student";
-//                         }else{
-//                             role = "resolver";
-//                         }
-//                         return {
-//                             uid:credentials.uid,
-//                             role:role
-//                         }
-//                     }
+                    // const user = await prisma.user_auth.create({
+                    //     data : {
+                    //         uid : "01623002",
+                    //         password : hashPass,
+                    //         modifyAt:new Date().toISOString(),
+                    //         createdAt:new Date().toISOString()
+                    //     }
+                    // })
+                    // if(user){
+                    //     console.log(user);
+                    //     prisma.$disconnect();
+                    //     let role;
+                    //     if(user.uid.charAt(0) === '0'){
+                    //         role = "student";
+                    //     }else{
+                    //         role = "resolver";
+                    //     }
+                    //     return {
+                    //         uid:credentials.uid,
+                    //         role:role
+                    //     }
+                    // }

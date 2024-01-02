@@ -54,7 +54,7 @@ export default function SendQuery() {
                         <p className='text-gray-600'>{QueryTitle}</p>
                     </div>
                 </div>
-                <div className="w-full mb-1 flex flex-col sm:col-span-3">
+                <div className="w-full mb-1 flex flex-col sm:col-span-3 break-words">
                     <label
                         className="mb-2 text-lg text-campus-green"
                         htmlFor="QueryDetails"

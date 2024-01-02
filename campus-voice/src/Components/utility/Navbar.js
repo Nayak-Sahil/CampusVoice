@@ -8,10 +8,10 @@ export default function Navbar() {
     <div className={utilstyle.navbarWrap}>
       <Image src={navLogo} alt='CampusVoice' width={150}></Image>
       <div className={utilstyle.navListWrap}>
-        <a href="">Home</a>
-        <a href="">About Us</a>
-        <a href="">FAQs</a>
-        <a href="">Help</a>
+        <a href="#">Home</a>
+        <a href="#">About Us</a>
+        <a href="#">FAQs</a>
+        <a href="#">Help</a>
       </div>
     </div>
   )
