@@ -3,12 +3,18 @@ import React from 'react'
 import Image from 'next/image'
 import logo from '../../../public/CampusVoice.png'
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
-import {  faCircleQuestion, faListCheck, faPaperPlane, faTableColumns, faUserGroup } from '@fortawesome/free-solid-svg-icons'
+import { library } from '@fortawesome/fontawesome-svg-core'
+import {  fas, faBullhorn, faListCheck, faTableColumns, faUserGroup, faAt } from '@fortawesome/free-solid-svg-icons'
+import { faCircleCheck, faPaperPlane, faCircleQuestion } from '@fortawesome/free-regular-svg-icons'
 import { signOut } from 'next-auth/react'
 import '../../app/Dashboard/Student/style.css'
 import LogoutBtn from './LogoutBtn'
 import Link from 'next/link'
-export default function Sidebar({ activeList }) {
+
+library.add(fas, faCircleCheck, faCircleQuestion, faListCheck, faPaperPlane, faTableColumns, faUserGroup, faAt);
+
+export default function Sidebar({ activeList, navList }) {
+    console.warn(navList);
     return (
         <aside className="relative bg-sidebar h-screen w-64 hidden sm:block shadow-xl">
             <div className="p-6">
@@ -18,26 +24,16 @@ export default function Sidebar({ activeList }) {
                     </button> */}
             </div>
             <nav className="text-black text-base font-semibold pt-3">
-                <Link href="/" className={`flex items-center ${(activeList == 1) ? 'active-nav-link' : 'opacity-75'} text-black py-4 pl-6 nav-item cursor-auto`}>
-                    <FontAwesomeIcon icon={faTableColumns} width={15}></FontAwesomeIcon>
-                    <p className="text-base font-normal">Dashboard</p>
-                </Link>
-                <Link href="/Dashboard/Student/AskQuery" className={`flex items-center ${(activeList == 2) ? 'active-nav-link' : 'opacity-75'} text-black hover:opacity-100 py-4 pl-6 nav-item cursor-auto`}>
-                    <FontAwesomeIcon icon={faPaperPlane} width={15}></FontAwesomeIcon>
-                    <p className="text-base font-normal">Ask Query</p> 
-                </Link>
-                <Link href="/" className={`flex items-center ${(activeList == 3) ? 'active-nav-link' : 'opacity-75'} text-black hover:opacity-100 py-4 pl-6 nav-item cursor-auto`}>
-                    <FontAwesomeIcon icon={faListCheck} width={15}></FontAwesomeIcon>
-                    <p className="text-base font-normal">Track</p>
-                </Link>
-                <Link href="/" className={`flex items-center ${(activeList == 4) ? 'active-nav-link' : 'opacity-75'} text-black hover:opacity-100 py-4 pl-6 nav-item cursor-auto`}>
-                    <FontAwesomeIcon icon={faUserGroup} width={15}></FontAwesomeIcon>
-                    <p className="text-base font-normal">View Other Query</p> 
-                </Link>
-                <Link href="/" className={`flex items-center ${(activeList == 5) ? 'active-nav-link' : 'opacity-75'} text-black hover:opacity-100 py-4 pl-6 nav-item cursor-auto`}>
-                    <FontAwesomeIcon icon={faCircleQuestion} width={15}></FontAwesomeIcon>
-                    <p className="text-base font-normal">Help Support</p>
-                </Link>
+                {
+                    navList.map((list, index)=>{
+                        return (
+                            <Link href={list.link} className={`flex items-center ${(activeList == index + 1) ? 'active-nav-link' : 'opacity-75'} text-black py-4 pl-6 nav-item cursor-auto`}>
+                                <FontAwesomeIcon width={25} icon={list.icon} />
+                                <p className="text-base font-normal">{list.listName}</p>
+                            </Link>
+                        )
+                    })
+                }
             </nav>
             <LogoutBtn />
         </aside>

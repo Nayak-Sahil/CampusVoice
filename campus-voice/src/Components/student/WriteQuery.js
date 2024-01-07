@@ -47,7 +47,7 @@ export default function WriteQuery() {
               Regarding
             </label>
             <input
-              className="appearance-none border w-full rounded-lg border px-2 py-2 shadow-sm text-gray-700 leading-tight focus:outline-none focus:ring focus:shadow-outline"
+              className="appearance-none w-full rounded-lg border px-2 py-2 shadow-sm text-gray-700 leading-tight focus:outline-none focus:ring focus:shadow-outline"
               name="QueryTitle"
               id="QueryTitle"
               type="text"
@@ -91,7 +91,7 @@ export default function WriteQuery() {
           </label>
           {touched.QueryDetails && errors.QueryDetails ? <p className="mb-2 text-red-500">{errors.QueryDetails}</p> : ""}
           <textarea
-            className="appearance-none border w-full rounded-lg border px-2 py-2 shadow-smtext-gray-700 leading-tight focus:outline-none focus:ring focus:shadow-outline"
+            className="appearance-none w-full rounded-lg border px-2 py-2 shadow-smtext-gray-700 leading-tight focus:outline-none focus:ring focus:shadow-outline"
             name="QueryDetails"
             id="QueryDetails"
             type="text"
@@ -112,7 +112,7 @@ export default function WriteQuery() {
         </button>
         <button
           type="submit"
-          className="group my-2 flex w-full items-center justify-center rounded-lg bg-blue-700 py-2 text-center font-bold text-white outline-none transition sm:order-1 sm:w-40 focus:ring"
+          className="group my-2 flex w-full items-center justify-center rounded-lg bg-campus-green py-2 text-center text-white outline-none transition sm:order-1 sm:w-40 focus:ring"
         >
           Continue
           <svg

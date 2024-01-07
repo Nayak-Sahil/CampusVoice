@@ -14,6 +14,35 @@ import Identity from '@/Components/student/Identity'
 import SendQuery from '@/Components/student/SendQuery'
 import QueryContext from '@/Contexts/QueryContext'
 
+const sideNavList = [
+    {
+      listName: "Dashboard",
+      icon: "fa-solid fa-table-columns",
+      link: "/",
+    },
+    {
+      listName: "Ask Query",
+      icon: "fa-regular fa-paper-plane",
+      link: "/Dashboard/Student/AskQuery",
+    },
+    {
+      listName: "Track",
+      icon: "fa-solid fa-list-check",
+      link: "/",
+    },
+    {
+      listName: "View Other Query",
+      icon: "fa-solid fa-user-group",
+      link: "/",
+    },
+    {
+      listName: "Help Support",
+      icon: "fa-regular fa-circle-question",
+      link: "/",
+    },
+  ]
+  
+
 export default function page() {
 
     const contextQuery = useContext(QueryContext);
@@ -22,10 +51,10 @@ export default function page() {
 
     return (
         <div className='bg-gray-50 flex'>
-            <Sidebar activeList="2" />
+            <Sidebar activeList="2" navList={sideNavList} />
             <div className="w-full flex flex-col h-screen overflow-y-hidden">
                 {/* Upper Header for Desktop */}
-                <Navbar />
+                <Navbar role="Student" />
                 {/* Mobile Nav */}
                 <MobileNav />
                 <div className="w-full overflow-x-hidden border-t flex flex-col">
@@ -34,44 +63,44 @@ export default function page() {
                             <div className="container mx-auto flex flex-col flex-wrap px-5 pb-5">
                                 <div className="bg-slate-50 rounded-xl mx-auto mt-4 mb-7 flex w-full flex-wrap items-center space-x-4 py-4 md:justify-center md:px-10">
                                     {/* for convey */}
-                                    <span className={`${currentformState === "WRITE" ? "bg-blue-600 text-white shadow" : "bg-[#23B679] text-white shadow "} hidden h-8 w-8 items-center justify-center rounded-full md:inline-flex`}>1</span>
-                                    <span className={`hidden ${currentformState === "WRITE" ? "text-blue-600" : "text-[#23B679]"} font-semibold md:inline`}>Convey</span>
+                                    <span className={`${currentformState === "WRITE" ? "bg-gray-600 text-white shadow" : "bg-[#23B679] text-white shadow "} hidden h-8 w-8 items-center justify-center rounded-full md:inline-flex`}>1</span>
+                                    <span className={`hidden ${currentformState === "WRITE" ? "text-gray-600" : "text-[#23B679]"} md:inline`}>Convey</span>
                                     {
-                                        currentformState !== "WRITE" ? 
-                                        <span className="hidden h-0.5 w-10 bg-[#23B679] md:inline"></span>
-                                        :
-                                        <span className="hidden h-0 w-10 border-t-2 border-dashed border-gray-400 md:inline"></span>
+                                        currentformState !== "WRITE" ?
+                                            <span className="hidden h-0.5 w-10 bg-[#23B679] md:inline"></span>
+                                            :
+                                            <span className="hidden h-0 w-10 border-t-2 border-dashed border-gray-400 md:inline"></span>
                                     }
 
                                     {/* for destination */}
                                     <span className={
-                                        `${currentformState === "READ_DESTINATION" ? "bg-blue-600 text-white" : ["WRITE","READ_DESTINATION"].includes(currentformState) ? "bg-white text-blue-700 " : "bg-[#23B679] text-white"} shadow hidden h-8 w-8 items-center justify-center rounded-full md:inline-flex`
-                                        }>2</span>
-                                    <span className={`hidden ${currentformState === "READ_DESTINATION" ? "text-blue-600 font-semibold" : ["WRITE","READ_DESTINATION"].includes(currentformState) ? "text-gray-600" : "text-[#23B679] font-semibold" }  md:inline`}>Destination</span>
+                                        `${currentformState === "READ_DESTINATION" ? "bg-gray-600 text-white" : ["WRITE", "READ_DESTINATION"].includes(currentformState) ? "bg-white text-gray-700 " : "bg-[#23B679] text-white"} shadow hidden h-8 w-8 items-center justify-center rounded-full md:inline-flex`
+                                    }>2</span>
+                                    <span className={`hidden ${currentformState === "READ_DESTINATION" ? "text-gray-600 font-semibold" : ["WRITE", "READ_DESTINATION"].includes(currentformState) ? "text-gray-600" : "text-[#23B679]"}  md:inline`}>Destination</span>
                                     {
-                                        ["MASK_IDENTITY","SEND"].includes(currentformState) ? 
-                                        <span className="hidden h-0.5 w-10 bg-[#23B679] md:inline"></span>
-                                        :
-                                        <span className="hidden h-0 w-10 border-t-2 border-dashed border-gray-400 md:inline"></span>
+                                        ["MASK_IDENTITY", "SEND"].includes(currentformState) ?
+                                            <span className="hidden h-0.5 w-10 bg-[#23B679] md:inline"></span>
+                                            :
+                                            <span className="hidden h-0 w-10 border-t-2 border-dashed border-gray-400 md:inline"></span>
                                     }
 
                                     {/* for identity */}
                                     <span className={
-                                        `${currentformState === "MASK_IDENTITY" ? "bg-blue-600 text-white" : ["READ_DESTINATION","WRITE"].includes(currentformState) ? "bg-white text-blue-700 " : "bg-[#23B679] text-white"} shadow hidden h-8 w-8 items-center justify-center rounded-full md:inline-flex`
-                                        }>3</span>
-                                    <span className={`hidden ${currentformState === "MASK_IDENTITY" ? "text-blue-600 font-semibold" : ["READ_DESTINATION","WRITE"].includes(currentformState) ? "text-gray-600" : "text-[#23B679] font-semibold"}  md:inline`}>Identity</span>
+                                        `${currentformState === "MASK_IDENTITY" ? "bg-gray-600 text-white" : ["READ_DESTINATION", "WRITE"].includes(currentformState) ? "bg-white text-gray-700 " : "bg-[#23B679] text-white"} shadow hidden h-8 w-8 items-center justify-center rounded-full md:inline-flex`
+                                    }>3</span>
+                                    <span className={`hidden ${currentformState === "MASK_IDENTITY" ? "text-gray-600 font-semibold" : ["READ_DESTINATION", "WRITE"].includes(currentformState) ? "text-gray-600" : "text-[#23B679]"}  md:inline`}>Identity</span>
                                     {
-                                        ["READ_DESTINATION","WRITE","MASK_IDENTITY"].includes(currentformState) ? 
-                                        <span className="hidden h-0 w-10 border-t-2 border-dashed border-gray-400 md:inline"></span>
-                                        :
-                                        <span className="hidden h-0.5 w-10 bg-[#23B679] md:inline"></span>
+                                        ["READ_DESTINATION", "WRITE", "MASK_IDENTITY"].includes(currentformState) ?
+                                            <span className="hidden h-0 w-10 border-t-2 border-dashed border-gray-400 md:inline"></span>
+                                            :
+                                            <span className="hidden h-0.5 w-10 bg-[#23B679] md:inline"></span>
                                     }
 
                                     {/* for send */}
                                     <span className={
-                                        `${currentformState === "SEND" ? "bg-blue-600 text-white" : "bg-white text-blue-700 " } shadow hidden h-8 w-8 items-center justify-center rounded-full md:inline-flex`
-                                        }>4</span>
-                                    <span className={`hidden ${currentformState === "SEND" ? "text-blue-600 font-semibold" : "text-gray-600" }  md:inline`}>Send</span>
+                                        `${currentformState === "SEND" ? "bg-gray-600 text-white" : "bg-white text-gray-700 "} shadow hidden h-8 w-8 items-center justify-center rounded-full md:inline-flex`
+                                    }>4</span>
+                                    <span className={`hidden ${currentformState === "SEND" ? "text-gray-600 font-semibold" : "text-gray-600"}  md:inline`}>Send</span>
 
 
                                     <span className="text-xl md:hidden"

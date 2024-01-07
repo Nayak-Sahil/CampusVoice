@@ -4,6 +4,7 @@ CampusVoice is user friendly Web-Application that helps college students to rais
 
 for queryResolver login
 11623001 - queryresolver@gmail.com - random1234
+11623003 - resolver123
 
 for student
 01623001 - arjav1234

@@ -64,9 +64,10 @@ export const authOptions = {
                         return {
                             uid:user.uid,
                             role:role,
-                            image:user.userInfo.image
+                            // image:user.userInfo.image
                         }
                     }
+                    
                     throw new Error("Invalid user!");
                 } catch (error) {
                     throw error
