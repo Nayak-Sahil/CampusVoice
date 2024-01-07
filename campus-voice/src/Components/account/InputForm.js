@@ -3,10 +3,12 @@ import { signIn } from 'next-auth/react';
 import { useState } from 'react';
 import { Alert } from './Alert';
 import { redirect } from 'next/navigation';
+import { useRouter } from 'next/navigation';
 
 const InputForm = () => {
     const [alertMsg, setAlertMsg] = useState("");
     const [loading, setLoading] = useState(false);
+    const router = useRouter();
     async function handleSubmit(e) {
         setLoading(true)
         const res = await signIn('credentials', { uid: e.get("uid"), password: e.get('password'), redirect: false});
@@ -15,17 +17,19 @@ const InputForm = () => {
               setAlertMsg("");
             }, 3000);
             setAlertMsg(res.error);
-        }
-        setTimeout(() => {
-          setLoading(false)
-        }, 200);
-        if(res.ok && res.status === 200){
-          if(res.url === 'http://localhost:3000/Account/QueryResolver'){
-              redirect('/Dashboard')
-          }else{
-              redirect('/Dashboard/Student');
+            setLoading(false)
           }
-        }
+
+          setTimeout(() => {
+            if(res.ok && res.status === 200){
+              setLoading(false);
+              if(res.url === 'http://localhost:3000/Account/QueryResolver'){
+                  router.push('/Dashboard/QueryResolver')
+              }else{
+                  router.push('/Dashboard/Student');
+              }
+            }
+          }, 500);
       }
   return (
     <form action={handleSubmit}>

@@ -24,6 +24,9 @@ export default function Navbar({role}) {
             <div className="relative w-1/2 flex justify-end">
                 <button onClick={openAccountOption} className="realtive z-10 w-12 h-12 rounded-full overflow-hidden border-4 border-gray-400 hover:border-gray-300 focus:border-gray-300 
                 focus:outline-none">
+                    {
+                        session ? console.log(session) : ""
+                    }
                     <Image
                         src={`https://res.cloudinary.com/${process.env.NEXT_PUBLIC_CLOUDINARY_CLOUD_NAME}/image/upload/${session?.data?.user?.image}`}
                         alt="Galaxy"

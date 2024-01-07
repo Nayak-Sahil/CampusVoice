@@ -64,7 +64,7 @@ export const authOptions = {
                         return {
                             uid:user.uid,
                             role:role,
-                            // image:user.userInfo.image
+                            image:user.userInfo.image
                         }
                     }
                     

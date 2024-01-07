@@ -6,7 +6,6 @@ import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
 import { library } from '@fortawesome/fontawesome-svg-core'
 import {  fas, faBullhorn, faListCheck, faTableColumns, faUserGroup, faAt } from '@fortawesome/free-solid-svg-icons'
 import { faCircleCheck, faPaperPlane, faCircleQuestion } from '@fortawesome/free-regular-svg-icons'
-import { signOut } from 'next-auth/react'
 import '../../app/Dashboard/Student/style.css'
 import LogoutBtn from './LogoutBtn'
 import Link from 'next/link'
@@ -14,7 +13,6 @@ import Link from 'next/link'
 library.add(fas, faCircleCheck, faCircleQuestion, faListCheck, faPaperPlane, faTableColumns, faUserGroup, faAt);
 
 export default function Sidebar({ activeList, navList }) {
-    console.warn(navList);
     return (
         <aside className="relative bg-sidebar h-screen w-64 hidden sm:block shadow-xl">
             <div className="p-6">
@@ -27,7 +25,7 @@ export default function Sidebar({ activeList, navList }) {
                 {
                     navList.map((list, index)=>{
                         return (
-                            <Link href={list.link} className={`flex items-center ${(activeList == index + 1) ? 'active-nav-link' : 'opacity-75'} text-black py-4 pl-6 nav-item cursor-auto`}>
+                            <Link href={list.link} key={index} className={`flex items-center ${(activeList == index + 1) ? 'active-nav-link' : 'opacity-75'} text-black py-4 pl-6 nav-item cursor-auto`}>
                                 <FontAwesomeIcon width={25} icon={list.icon} />
                                 <p className="text-base font-normal">{list.listName}</p>
                             </Link>

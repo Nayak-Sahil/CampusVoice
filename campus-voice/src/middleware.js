@@ -1,12 +1,11 @@
 import { withAuth } from "next-auth/middleware"
-import { redirect } from "next/dist/server/api-utils";
 import { NextResponse } from "next/server"
 
 export default withAuth(
   function middleware(req) {
     if(req.nextUrl.pathname.split('/').pop() === "Dashboard"){
         let role = req.nextauth.token.role.replace(req.nextauth.token.role.charAt(0), req.nextauth.token.role.charAt(0).toUpperCase());
-        role = role === "resolver" ? "QueryResolver" : "Student";
+        if(role === "Resolver") role = "QueryResolver";
         return NextResponse.rewrite(new URL(`/Dashboard/${role}`,req.url));
     }
 

@@ -3,10 +3,30 @@ import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
 import { faPaperPlane, faUser } from '@fortawesome/free-regular-svg-icons'
 import { faGlobe, faLayerGroup, faLock, faUsers } from '@fortawesome/free-solid-svg-icons'
 import QueryContext from '@/Contexts/QueryContext';
+import { useRouter} from 'next/navigation'
 
 export default function SendQuery() {
     const contextQuery = useContext(QueryContext);
     const {QueryCategory, QueryTitle, QueryDetails, PostVisibility, QueryResolver, UserIdentity} = contextQuery.queryData;
+
+
+    const router = useRouter();
+    const saveQueryData = (e) =>{
+        e.preventDefault();
+        console.log(contextQuery.queryData)
+        if(localStorage.getItem('queries')){
+            const data = JSON.parse(localStorage.getItem('queries'));
+            data.push(contextQuery.queryData);
+            localStorage.setItem('queries',JSON.stringify(data));
+        }else{
+            const data = [];
+            data.push(contextQuery.queryData);
+            localStorage.setItem('queries',JSON.stringify(data));
+        }
+        contextQuery.queryData.FormState = "WRITE";
+        router.push('/Dashboard/Student')
+    }
+
     return (
         <div className="flex-col items-center justify-evenly w-full h-full">
             <h1 className="text-2xl font-semibold">Confirm Your Query Details. </h1>
@@ -70,6 +90,7 @@ export default function SendQuery() {
                 <button
                     type="submit"
                     className="right-2 group my-2 flex w-full items-center justify-center rounded-lg bg-campus-green py-2 text-center text-white outline-none transition sm:order-1 sm:w-40 focus:ring"
+                    onClick={saveQueryData}
                 >
                     Send
                     <svg
