@@ -59,7 +59,7 @@
 .authCard img{
     filter: drop-shadow(5px 5px 5px var(--brdr));
 }
-.authCard button{
+.auth_btn{
     width: 60%;
     padding: 10px;
     font-size: 18px;

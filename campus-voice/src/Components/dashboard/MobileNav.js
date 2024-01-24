@@ -1,23 +1,32 @@
+"use client"
 import Image from 'next/image'
-import React from 'react'
+import React, { useState } from 'react'
 import logo from '../../../public/CampusVoice.png'
+import Link from 'next/link'
+import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
+import { faBars, faClose } from '@fortawesome/free-solid-svg-icons'
 
 export default function MobileNav() {
+    const [isOpen, setIsOpen] = useState(false);
+
+    const handleHamburger = () =>{
+        setIsOpen(e => !e);
+    }
+
     return (
         <header x-data="{ isOpen: false }" className="w-full bg-sidebar py-5 px-6 sm:hidden">
             <div className="flex items-center justify-between">
-                <a href="index.html" className="text-black text-3xl font-semibold uppercase hover:text-gray-300"><Image src={logo} alt='CampusVoice' width={150}></Image></a>
-                <button className="text-black text-3xl focus:outline-none">
-                    <i x-show="!isOpen" className="fas fa-bars"></i>
-                    <i x-show="isOpen" className="fas fa-times"></i>
+                <Link href="/Dashboard" className="text-black text-3xl font-semibold uppercase hover:text-gray-300"><Image src={logo} alt='CampusVoice' width={150}></Image></Link>
+                <button type='button' className="text-black text-3xl focus:outline-none z-30">
+                    <FontAwesomeIcon onClick={handleHamburger} color={isOpen ? "#23b578" : "#232323"} icon={isOpen ? faClose : faBars} / >
                 </button>
             </div>
 
-            <nav className="hidden flex flex-col pt-4">
-                <a href="index.html" className="flex items-center active-nav-link text-black py-2 pl-4 nav-item">
+            <nav className="flex-col pt-4" style={isOpen ? {display : "flex"} : {display: "none"}}>
+                <Link href="/" className="flex items-center active-nav-link text-black py-2 pl-4 nav-item">
                     <i className="fas fa-tachometer-alt mr-3"></i>
                     Dashboard
-                </a>
+                </Link>
                 <a href="blank.html" className="flex items-center text-black opacity-75 hover:opacity-100 py-2 pl-4 nav-item">
                     <i className="fas fa-sticky-note mr-3"></i>
                     Blank Page

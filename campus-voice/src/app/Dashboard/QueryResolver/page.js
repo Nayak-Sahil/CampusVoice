@@ -7,27 +7,28 @@ import Link from 'next/link';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faPaperPlane } from '@fortawesome/free-regular-svg-icons';
 import { faArrowUpRightFromSquare } from '@fortawesome/free-solid-svg-icons';
+import TableRows from './TableRows';
 
 const sideNavList = [
   {
     listName: "Dashboard",
     icon: "fa-solid fa-table-columns",
-    link: "",
+    link: "#",
   },
   {
     listName: "Mention",
     icon: "fa-solid fa-at",
-    link: "",
+    link: "#",
   },
   {
     listName: "Solved Query",
     icon: "fa-regular fa-circle-check",
-    link: "",
+    link: "#",
   },
   {
     listName: "Announcement",
     icon: "fa-solid fa-bullhorn",
-    link: "",
+    link: "#",
   },
 ]
 
@@ -87,42 +88,10 @@ const page = () => {
                   </thead>
 
                   <tbody className="bg-white lg:border-gray-300">
+                    <TableRows />
                     <tr className="">
                       <td className="whitespace-no-wrap py-4 text-left text-sm text-gray-600 sm:px-3 lg:text-left">
-                        07 February, 2022
-                        <div className="mt-1 flex flex-col text-xs font-medium lg:hidden">
-                          <div className="flex items-center">
-                            Jane Doeson
-                          </div>
-                          <div className="flex items-center">
-                            Parking
-                          </div>
-                          <div className="">Parking At Annexe Building</div>
-                        </div>
-                      </td>
-
-                      <td className="whitespace-no-wrap hidden py-4 text-left text-sm text-gray-600 sm:px-3 lg:table-cell lg:text-left">Arjav</td>
-
-                      <td className="whitespace-no-wrap hidden py-4 text-sm font-normal text-gray-600 sm:px-3 lg:table-cell">Parking</td>
-
-                      <td className="whitespace-no-wrap hidden py-4 text-left text-sm text-gray-600 sm:px-3 lg:table-cell lg:text-left">Parking At Annexe Building</td>
-
-                      <td className="whitespace-no-wrap hidden py-4 text-left text-sm text-gray-600 sm:px-3 lg:table-cell lg:text-left">
-                        <Link className='mr-2' href="/">View</Link>
-                        <FontAwesomeIcon icon={faArrowUpRightFromSquare} />
-                      </td>
-
-                      <td className="whitespace-no-wrap py-4 text-right text-sm text-gray-600 sm:px-3 sm:hidden lg:text-left">
-                        <span className="mt-1 block w-fit whitespace-nowrap rounded-full bg-purple-100 px-2 py-0.5 text-center text-xs text-purple-800 lg:hidden">Action Required</span>
-                      </td>
-
-                      <td className="whitespace-no-wrap hidden py-4 text-sm font-normal text-gray-500 sm:px-3 lg:table-cell">
-                        <span className="ml-2 mr-3 whitespace-nowrap rounded-full bg-purple-100 px-2 py-0.5 text-purple-800">Action Required</span>
-                      </td>
-                    </tr>
-                    <tr className="">
-                      <td className="whitespace-no-wrap py-4 text-left text-sm text-gray-600 sm:px-3 lg:text-left">
-                        07 February, 2022
+                        November 13, 2023
                         <div className="mt-1 flex flex-col text-xs font-medium lg:hidden">
                           <div className="flex items-center">
                             Jane Doeson
@@ -155,7 +124,7 @@ const page = () => {
                     </tr>
                     <tr className="">
                       <td className="whitespace-no-wrap py-4 text-left text-sm text-gray-600 sm:px-3 lg:text-left">
-                        07 February, 2022
+                        November 13, 2023
                         <div className="mt-1 flex flex-col text-xs font-medium lg:hidden">
                           <div className="flex items-center">
                             Jane Doeson
@@ -188,7 +157,7 @@ const page = () => {
                     </tr>
                     <tr className="">
                       <td className="whitespace-no-wrap py-4 text-left text-sm text-gray-600 sm:px-3 lg:text-left">
-                        07 February, 2022
+                        November 13, 2023
                         <div className="mt-1 flex flex-col text-xs font-medium lg:hidden">
                           <div className="flex items-center">
                             Jane Doeson
@@ -221,7 +190,7 @@ const page = () => {
                     </tr>
                     <tr className="">
                       <td className="whitespace-no-wrap py-4 text-left text-sm text-gray-600 sm:px-3 lg:text-left">
-                        07 February, 2022
+                        November 13, 2023
                         <div className="mt-1 flex flex-col text-xs font-medium lg:hidden">
                           <div className="flex items-center">
                             Jane Doeson

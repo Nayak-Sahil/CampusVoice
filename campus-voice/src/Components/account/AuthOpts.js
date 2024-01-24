@@ -1,12 +1,12 @@
 import React from 'react'
-import '../../app/Account/style.css'
-import authstyle from '../../app/styles/auth.module.css';
+import '../../app/globals.css'
+import authstyle from '../../app/Account/styles/auth.module.css';
 import Link from 'next/link';
 import student from '../../../public/images/auth/student.png'
 import querySolver from '../../../public/images/auth/QuerySolve.png'
 import Image from 'next/image';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
-import { faArrowRightFromBracket, faCircleInfo } from '@fortawesome/free-solid-svg-icons';
+import { faArrowRightFromBracket } from '@fortawesome/free-solid-svg-icons';
 import { faLightbulb } from '@fortawesome/free-regular-svg-icons';
 
 export default function AuthOpts() {
@@ -36,7 +36,7 @@ function AuthCard({role, descrp, image}){
             priority={false}
             draggable="false"
             width={(image == querySolver) ? 160: 190}></Image>
-            <button><Link href={`/Account/${role.toString().split(" ").join("")}`}>Login <FontAwesomeIcon icon={faArrowRightFromBracket} width={15}></FontAwesomeIcon></Link></button>
+            <button className={authstyle.auth_btn}><Link href={`/Account/${role.toString().split(" ").join("")}`}>Login <FontAwesomeIcon icon={faArrowRightFromBracket} width={15}></FontAwesomeIcon></Link></button>
         </div>
     )
 }

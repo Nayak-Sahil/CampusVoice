@@ -11,7 +11,7 @@ const sideNavList = [
     {
       listName: "Dashboard",
       icon: "fa-solid fa-table-columns",
-      link: "/",
+      link: "/Dashboard/Student",
     },
     {
       listName: "Ask Query",

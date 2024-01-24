@@ -1,8 +1,12 @@
 "use client";
 import QueryContext from "@/Contexts/QueryContext";
 import { QuerySchema } from "@/Schemas/QuerySchema";
+import { faClose } from "@fortawesome/free-solid-svg-icons";
+import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { useFormik } from "formik";
-import React, { useContext, useState } from "react";
+import Image from "next/image";
+import React, { useContext, useRef, useState } from "react";
+import "../../app/globals.css"
 
 
 const initialValues = {
@@ -12,21 +16,37 @@ const initialValues = {
 };
 
 export default function WriteQuery() {
-
+  const imageInputRef = useRef(null);
   const contextQuery = useContext(QueryContext);
-  console.warn(contextQuery.setQueryData)
+  const [selectedImages, setselectedImages] = useState([]);
   const { values, touched, errors, handleBlur, handleChange, handleSubmit } = useFormik({
     initialValues: initialValues,
     validationSchema: QuerySchema,
     onSubmit: (values) => {
       console.log(values);
-      const queryDetailsObj = {...contextQuery.queryData, ...values};
+      const queryDetailsObj = {
+        ...contextQuery.queryData, ...values,
+        queryDataImages: selectedImages
+      };
       queryDetailsObj["FormState"] = "READ_DESTINATION";
       contextQuery.setQueryData(queryDetailsObj);
     },
   });
 
+  const handleImageInput = (e) => {
+    const files = Array.from(e.target.files);
+    if(selectedImages.length + files.length > 5){
+      /* show alert */
+      console.log("Cannot add more than 5 files!");
+      return;
+    }
+    setselectedImages(prevImages => [...prevImages, ...files]);
+  }
 
+  const removeImage = (index) =>{
+    setselectedImages(e => {const updateImgs = [...e];updateImgs.splice(index,1);return updateImgs;});
+    imageInputRef.current.value = "";
+  }
 
   return (
     <form className="flex w-full flex-col" onSubmit={handleSubmit}>
@@ -102,6 +122,53 @@ export default function WriteQuery() {
             onBlur={handleBlur}
           ></textarea>
         </div>
+
+        <div className="w-full mt-3 mb-1 flex flex-col sm:col-span-3">
+          <label
+            className="mb-2 text-gray-800"
+          >
+            Files
+          </label>
+        </div>
+        <div className="flex w-full overflow-scroll mb-5 no-scrollbar border-2 border-gray-300 border-dashed rounded-lg">
+          <label htmlFor="dropzone-file" style={selectedImages?.length > 0 ? { backgroundColor: "white" } : { alignItems: "center", justifyContent: "center" }} className="flex flex-col w-full h-64  cursor-pointer bg-gray-50 hover:bg-gray-100 ">
+            {selectedImages?.length > 0 ?
+              <div className="flex flex-wrap m-5">
+                {
+                  selectedImages.map((file, index) => (
+                    file.type.startsWith("image") ?
+                      <div className="justify-normal items-start z-30 px-1 relative overflow-hidden" key={index}>
+                        <Image
+                          key={index}
+                          src={URL.createObjectURL(file)}
+                          alt={`${file}`}
+                          className="rounded-lg border my-4 mx-4 z-30"
+                          width={150}
+                          height={100}
+                          style={{ minWidth: "150px", minHeight: "100px" }}
+                        />
+                        <FontAwesomeIcon className="absolute delay-100 text-campus-dark py-[6px] px-[8px] rounded-full z-50 top-1 right-2 bg-gray-100" onClick={(e)=>{e.preventDefault();removeImage(index)}} onMouseOver={(e) => e.target.style.scale = "1.2"}  onMouseOut={(e) => e.target.style.scale = "1.0"} icon={faClose} />
+                      </div>
+                      :
+                      console.log(file)
+                  ))
+                }
+              </div>
+              :
+              <>
+                <div className="flex flex-col items-center justify-center pt-5 pb-6">
+                  <svg className="w-8 h-8 mb-4 text-gray-500 " aria-hidden="true" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 20 16">
+                    <path stroke="currentColor" strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M13 13h3a3 3 0 0 0 0-6h-.025A5.56 5.56 0 0 0 16 6.5 5.5 5.5 0 0 0 5.207 5.021C5.137 5.017 5.071 5 5 5a4 4 0 0 0 0 8h2.167M10 15V6m0 0L8 8m2-2 2 2" />
+                  </svg>
+                  <p className="mb-2 text-sm text-gray-500 "><span className="font-semibold">Click to upload</span> or drag and drop</p>
+                  <p className="text-xs text-gray-500 ">SVG, PNG, JPG or GIF (MAX. 800x400px)</p>
+                </div>
+              </>
+            }
+            <input ref={imageInputRef} onInput={handleImageInput} multiple="multiple" accept=".jpg,.png,.jpeg,.pdf,.csv" id="dropzone-file" type="file" className="hidden" />
+          </label>
+        </div>
+
       </div>
       <div className="flex flex-col justify-between sm:flex-row">
         <button

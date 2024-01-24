@@ -3,9 +3,9 @@ import  '../tailwind.css'
 const page = () => {
     return (
         <section>
-            <div class="bg-black text-white">
-                <div class="flex h-screen">
-                    <div class="m-auto text-center">
+            <div className="bg-black text-white">
+                <div className="flex h-screen">
+                    <div className="m-auto text-center">
                         <div>
                             <svg width="631" height="379" viewBox="0 0 631 379" fill="none" xmlns="http://www.w3.org/2000/svg">
                                 <g clip-path="url(#clip0)">
@@ -183,10 +183,10 @@ const page = () => {
                             </svg>
 
                         </div>
-                        <p class="text-sm md:text-base text-[#23b578] p-2 mb-4">The stuff you were looking for doesn't exist
+                        <p className="text-sm md:text-base text-[#23b578] p-2 mb-4">The stuff you were looking for doesn't exist
                         </p>
                         <Link href="/Dashboard"
-                            class="bg-transparent hover:bg-[#23b578] text-[#23b578] hover:text-white rounded shadow hover:shadow-lg py-2 px-4 border border-[#23b578] hover:border-transparent">
+                            className="bg-transparent hover:bg-[#23b578] text-[#23b578] hover:text-white rounded shadow hover:shadow-lg py-2 px-4 border border-[#23b578] hover:border-transparent">
                             Go Back to Dashboard</Link>
                     </div>
                 </div>

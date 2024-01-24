@@ -1,4 +1,3 @@
-import { Inter } from 'next/font/google'
 import './globals.css'
 import { League_Spartan } from 'next/font/google'
 import { QueryState } from '@/Contexts/QueryState'
