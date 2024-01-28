@@ -46,7 +46,7 @@ export default function Identity() {
                     </div>
                     <div className="relative flex items-start">
                         <div className="flex items-center h-5 mt-1">
-                            <input name='IdentityVisibility' id="ActualVisibility" value="Actual" type="radio" />
+                            <input name='IdentityVisibility' id="ActualVisibility" value="Actual" type="radio" defaultChecked/>
                         </div>
                         <label htmlFor='ActualVisibility' className="ms-3">
                             <span className="block text-base text-campus-green">No, It's Fine.</span>

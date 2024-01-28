@@ -19,7 +19,7 @@ export default function Destination() {
     }
 
     return (
-        <div className="flex items-center justify-between w-full h-full border-2 rounded-xl">
+        <div className="sm:flex sm:flex-row sm:justify-between flex-col items-center justify-between w-full h-full border-2 rounded-xl">
             <div className="m-10 max-w-lg pr-6 border-r-2">
                 {/* rounded-lg border bg-white px-5 py-8 shadow-lg */}
                 <div className="h-full flex items-center justify-center max-md:flex-col">
@@ -44,12 +44,12 @@ export default function Destination() {
                     </div>
                 </div>
             </div>
-            <div className='relative w-2/5 h-[200px] mr-5'>
+            <div className='relative max-w-lg h-[200px] mr-5'>
                 <p className="font-medium mb-3 text-black">Do you want to publish your query Globally?</p>
                 <div className="grid space-y-3">
                     <div className="relative flex items-start">
                         <div className="flex items-center h-5 mt-1">
-                            <input ref={postVisibilityInpt} name='QueryVisibility' id="GlobalVisibility" value="Global" type="radio"/>
+                            <input ref={postVisibilityInpt} name='QueryVisibility' id="GlobalVisibility" value="Global" type="radio" defaultChecked/>
                         </div>
                         <label htmlFor='GlobalVisibility' className="ms-3">
                             <span className="block text-base text-campus-green">Global</span>

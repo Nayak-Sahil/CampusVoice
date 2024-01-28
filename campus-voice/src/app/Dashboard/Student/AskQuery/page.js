@@ -14,44 +14,14 @@ import Identity from '@/Components/student/Identity'
 import SendQuery from '@/Components/student/SendQuery'
 import QueryContext from '@/Contexts/QueryContext'
 
-const sideNavList = [
-    {
-      listName: "Dashboard",
-      icon: "fa-solid fa-table-columns",
-      link: "/Dashboard/Student",
-    },
-    {
-      listName: "Ask Query",
-      icon: "fa-regular fa-paper-plane",
-      link: "/Dashboard/Student/AskQuery",
-    },
-    {
-      listName: "Track",
-      icon: "fa-solid fa-list-check",
-      link: "/",
-    },
-    {
-      listName: "View Other Query",
-      icon: "fa-solid fa-user-group",
-      link: "/",
-    },
-    {
-      listName: "Help Support",
-      icon: "fa-regular fa-circle-question",
-      link: "/",
-    },
-  ]
-  
-
 export default function page() {
-
     const contextQuery = useContext(QueryContext);
     console.log(contextQuery)
     const currentformState = contextQuery.queryData.FormState;
 
     return (
         <div className='bg-gray-50 flex'>
-            <Sidebar activeList="2" navList={sideNavList} />
+            <Sidebar activeList="2" />
             <div className="w-full flex flex-col h-screen overflow-y-hidden">
                 {/* Upper Header for Desktop */}
                 <Navbar role="Student" />

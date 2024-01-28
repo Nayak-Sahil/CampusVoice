@@ -1,5 +1,5 @@
 'use client'
-import React from 'react'
+import React, {useContext} from 'react'
 import Image from 'next/image'
 import logo from '../../../public/CampusVoice.png'
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
@@ -9,10 +9,13 @@ import { faCircleCheck, faPaperPlane, faCircleQuestion } from '@fortawesome/free
 import '../../app/Dashboard/Student/style.css'
 import LogoutBtn from './LogoutBtn'
 import Link from 'next/link'
+import NavListContext from '@/Contexts/NavListContext'
 
 library.add(fas, faCircleCheck, faCircleQuestion, faListCheck, faPaperPlane, faTableColumns, faUserGroup, faAt);
 
-export default function Sidebar({ activeList, navList }) {
+export default function Sidebar({ activeList }) {
+    const navListCntxt = useContext(NavListContext);
+    const navList = navListCntxt.getNavListInfo;
     return (
         <aside className="relative bg-sidebar h-screen w-64 hidden sm:block shadow-xl">
             <div className="p-6">
