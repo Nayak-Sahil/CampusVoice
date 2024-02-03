@@ -1,10 +1,11 @@
 import React from 'react'
+import '../../style.css'
 import Sidebar from '@/Components/dashboard/Sidebar'
 import Navbar from '@/Components/dashboard/Navbar'
 import MobileNav from '@/Components/dashboard/MobileNav'
-import '../style.css'
-import TrackQueryList from '@/Components/student/TrackQueryList'
-export default function page() {
+import TrackQuery from '@/Components/student/TrackQuery'
+
+export default function page({params}) {
   return (
     <div className='bg-gray-50 flex'>
       <Sidebar activeList="3" />
@@ -16,8 +17,7 @@ export default function page() {
         <MobileNav />
 
         <div className="w-full h-[100vh] overflow-x-hidden border-t flex flex-col justify-between">
-          {/* <TrackQuery /> */}
-          <TrackQueryList />
+          <TrackQuery queryId={params.QueryID} />
         </div>
       </div>
     </div>

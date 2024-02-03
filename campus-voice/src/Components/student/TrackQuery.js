@@ -1,11 +1,11 @@
 import { faClock, faFileLines, faUser } from '@fortawesome/free-regular-svg-icons'
-import { faLayerGroup, faLock, faReplyAll, faSignal, faUpRightFromSquare, faUserAstronaut, faUserTie } from '@fortawesome/free-solid-svg-icons'
+import { faHashtag, faLayerGroup, faLock, faReplyAll, faSignal, faUpRightFromSquare, faUserAstronaut, faUserTie } from '@fortawesome/free-solid-svg-icons'
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
 import Image from 'next/image'
 import React from 'react'
 import approved from "../../../public/emojies/angry.png"
 
-export default function TrackQuery() {
+export default function TrackQuery({queryId}) {
     const queryStatusStyle = {
         resolved: {
             container: "shadow-green-400",
@@ -20,9 +20,15 @@ export default function TrackQuery() {
     }
     return (
         <div className="relative mx-auto my-5 flex w-full flex-col justify-between px-10 lg:max-w-screen-lg lg:flex-row">
-            <div className="bg-white absolute left-0 h-full w-full lg:w-5/6 rounded-md border border-slate-400"></div>
+            <div className="bg-white absolute left-0 h-full w-full lg:w-5/6 rounded-2xl border border-slate-200 shadow"></div>
             <div className="relative py-10 ">
-                <span className="rounded-full bg-campus-green bg-opacity-10 px-4 pt-1 text-sm text-campus-green w-max flex items-center mb-7">Recent Query</span>
+                <div className='w-60 flex justify-between'>
+                    <span className="rounded-full bg-campus-green bg-opacity-10 px-4 pt-1 text-sm text-campus-green w-max flex items-center mb-7">Recent Query</span>
+                    <span className="rounded-full bg-gray-500 bg-opacity-10 px-4 pt-1 text-sm text-gray-700 w-max flex items-center mb-7">
+                        <FontAwesomeIcon className='mb-1 mr-1' icon={faHashtag} /> 
+                        {queryId}
+                    </span>
+                </div>
                 <h2 className="text-slate-900 text-3xl font-bold lg:text-4xl">Query Title</h2>
                 <div className='my-5 relative'>
                     <p className="text-slate-700 line-clamp-2 max-w-lg">Lorem ipsum dolor sit, amet consectetur adipisicing elit. Sequi id quaerat optio nisi cum?Lorem ipsum dolor sit, amet consectetur adipisicing elit. Sequi id quaerat optio nisi cum?Lorem ipsum dolor sit, amet consectetur adipisicing elit. Sequi id quaerat optio nisi cum?

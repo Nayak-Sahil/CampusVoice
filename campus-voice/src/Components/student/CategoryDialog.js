@@ -37,39 +37,39 @@ const CategoryDialog = React.memo(({ isModalOpen, setModal }) => {
                         Please choose the specific category in which you encountered an issue.
                     </label>
                 </div>
-                <div className="flex flex-col w-full mb-5 no-scrollbar">
+                <div className="flex flex-col w-full mb-3 no-scrollbar">
                     <div className='flex flex-col w-full h-max py-1'>
                         <p className='text-slate-800 mb-2'>Your Department:</p>
                         <div className="relative w-48 lg:w-64">
-                            <input className="peer hidden" id="radio_1" type="radio" name="radio"  />
+                            <input className="peer hidden" id="deptRadio" type="radio" name="radio" />
                             <span className="peer-checked:border-campus-green peer-checked:border-opacity-80 absolute right-4 top-1/2 box-content block h-3 w-3 -translate-y-1/2 rounded-full border-4 border-gray-300 bg-white"></span>
-                            <label className="peer-checked:border-2 peer-checked:border-campus-green peer-checked:border-opacity-50 peer-checked:bg-gray-50 flex items-center cursor-pointer select-none rounded-lg border border-gray-300 py-2 px-3 pr-11" htmlFor="radio_1">
+                            <label className="peer-checked:shadow-inner peer-checked:bg-gray-50 flex items-center cursor-pointer select-none rounded-lg border border-opacity-20 border-gray-300 shadow py-2 px-3 pr-11" htmlFor="deptRadio">
                                 <FontAwesomeIcon className='text-[21px] text-slate-800' icon={faBuildingColumns} />
                                 <div className="ml-3">
-                                    <span className="mt-2 text-sm text-slate-800 font-semibold tracking-wide	">Information Technology</span>
+                                    <span className="mt-2 text-sm text-slate-800 font-semibold tracking-wide">Information Technology</span>
                                     <p className="text-slate-500 text-sm leading-6">Academic.</p>
                                 </div>
                             </label>
                         </div>
                     </div>
-                    <div className='mt-3 flex flex-col w-full h-max py-1'>
+                    <div className='mt-3 flex flex-col w-full h-max py-2'>
                         <p className='text-slate-800 mb-2'>Other Categories:</p>
-                        <div className='w-full h-max overflow-y-auto grid grid-flow-col auto-cols-max gap-3'>
+                        <div className='w-full h-max overflow-y-auto grid grid-flow-col auto-cols-max gap-3 pb-1'>
                             <div className="relative w-max lg:w-max">
-                                <input className="peer hidden" id="radio_1" type="radio" name="radio"  />
+                                <input className="peer hidden" id="placementRadio" type="radio" name="radio"  />
                                 <span className="peer-checked:border-campus-green peer-checked:border-opacity-80 absolute right-4 top-1/2 box-content block h-3 w-3 -translate-y-1/2 rounded-full border-4 border-gray-300 bg-white"></span>
-                                <label className="peer-checked:border-2 peer-checked:border-campus-green peer-checked:border-opacity-50 peer-checked:bg-gray-50 flex items-center cursor-pointer select-none rounded-lg border border-gray-300 py-2 px-4 pr-14" htmlFor="radio_1">
+                                <label className="peer-checked:shadow-inner peer-checked:bg-gray-50 flex items-center cursor-pointer select-none rounded-lg border border-opacity-20 border-gray-300 shadow py-2 px-4 pr-14" htmlFor="placementRadio">
                                     <FontAwesomeIcon className='text-xl text-slate-800' icon={faBriefcase} />
                                     <div className="ml-3">
-                                        <span className="mt-2 text-sm text-slate-800 font-semibold tracking-wide	">Placement</span>
+                                        <span className="mt-2 text-sm text-slate-800 font-semibold tracking-wide">Placement</span>
                                         <p className="text-slate-500 text-sm leading-6">Food.</p>
                                     </div>
                                 </label>
                             </div>
                             <div className="relative w-max lg:w-max">
-                                <input className="peer hidden" id="radio_1" type="radio" name="radio"  />
+                                <input className="peer hidden" id="HostelRadio" type="radio" name="radio"  />
                                 <span className="peer-checked:border-campus-green peer-checked:border-opacity-80 absolute right-4 top-1/2 box-content block h-3 w-3 -translate-y-1/2 rounded-full border-4 border-gray-300 bg-white"></span>
-                                <label className="peer-checked:border-2 peer-checked:border-campus-green peer-checked:border-opacity-50 peer-checked:bg-gray-50 flex items-center cursor-pointer select-none rounded-lg border border-gray-300 py-2 px-4 pr-14" htmlFor="radio_1">
+                                <label className="peer-checked:shadow-inner peer-checked:bg-gray-50 flex items-center cursor-pointer select-none rounded-lg border border-opacity-20 border-gray-300 shadow py-2 px-4 pr-14" htmlFor="HostelRadio">
                                     <FontAwesomeIcon className='text-xl text-slate-800' icon={faBuilding} />
                                     <div className="ml-3">
                                         <span className="mt-2 text-sm text-slate-800 font-semibold tracking-wide	">Hostel</span>
@@ -78,9 +78,9 @@ const CategoryDialog = React.memo(({ isModalOpen, setModal }) => {
                                 </label>
                             </div>
                             <div className="relative w-max lg:w-max">
-                                <input className="peer hidden" id="radio_1" type="radio" name="radio"  />
+                                <input className="peer hidden" id="canteenRadio" type="radio" name="radio"  />
                                 <span className="peer-checked:border-campus-green peer-checked:border-opacity-80 absolute right-4 top-1/2 box-content block h-3 w-3 -translate-y-1/2 rounded-full border-4 border-gray-300 bg-white"></span>
-                                <label className="peer-checked:border-2 peer-checked:border-campus-green peer-checked:border-opacity-50 peer-checked:bg-gray-50 flex items-center cursor-pointer select-none rounded-lg border border-gray-300 py-2 px-4 pr-14" htmlFor="radio_1">
+                                <label className="peer-checked:shadow-inner peer-checked:bg-gray-50 flex items-center cursor-pointer select-none rounded-lg border border-opacity-20 border-gray-300 shadow py-2 px-4 pr-14" htmlFor="canteenRadio">
                                     <FontAwesomeIcon className='text-xl text-slate-800' icon={faPizzaSlice} />
                                     <div className="ml-3">
                                         <span className="mt-2 text-sm text-slate-800 font-semibold tracking-wide	">Canteen</span>
@@ -89,9 +89,9 @@ const CategoryDialog = React.memo(({ isModalOpen, setModal }) => {
                                 </label>
                             </div>
                             <div className="relative w-max lg:w-max">
-                                <input className="peer hidden" id="radio_1" type="radio" name="radio"  />
+                                <input className="peer hidden" id="clubRadio" type="radio" name="radio"  />
                                 <span className="peer-checked:border-campus-green peer-checked:border-opacity-80 absolute right-4 top-1/2 box-content block h-3 w-3 -translate-y-1/2 rounded-full border-4 border-gray-300 bg-white"></span>
-                                <label className="peer-checked:border-2 peer-checked:border-campus-green peer-checked:border-opacity-50 peer-checked:bg-gray-50 flex items-center cursor-pointer select-none rounded-lg border border-gray-300 py-2 px-4 pr-14" htmlFor="radio_1">
+                                <label className="peer-checked:shadow-inner peer-checked:bg-gray-50 flex items-center cursor-pointer select-none rounded-lg border border-opacity-20 border-gray-300 shadow py-2 px-4 pr-14" htmlFor="clubRadio">
                                     <FontAwesomeIcon className='text-xl text-slate-800' icon={faCircleNodes} />
                                     <div className="ml-3">
                                         <span className="mt-2 text-sm text-slate-800 font-semibold tracking-wide	">Club</span>
