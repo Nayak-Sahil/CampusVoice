@@ -3,16 +3,18 @@ import React, { useContext, useRef } from 'react'
 import resolverImg from '../../../public/images/resolver/head_it.jpg';
 import Image from 'next/image';
 import QueryContext from '@/Contexts/QueryContext';
+import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
+import { faUsers } from '@fortawesome/free-solid-svg-icons';
 export default function Destination() {
     const contextQuery = useContext(QueryContext);
     const postVisibilityInpt = useRef();
-    function goToIdentity(){
+    function goToIdentity() {
         let postVisibilityMode = (postVisibilityInpt.current.checked) ? "GLOBAL" : "PRIVATE";
         let dataObj = {
             PostVisibility: postVisibilityMode,
             QueryResolver: "HOD"
         }
-        let finalObj = {...contextQuery.queryData, ...dataObj};
+        let finalObj = { ...contextQuery.queryData, ...dataObj };
         // Update FormState
         finalObj["FormState"] = "MASK_IDENTITY";
         contextQuery.setQueryData(finalObj);
@@ -30,7 +32,23 @@ export default function Destination() {
                         <h3 className="mt-2 text-sm text-semibold text-center leading-2 text-gray-600">Head of Department (I.T.)</h3>
                     </div>
                     <div className='w-2/3 h-max'>
-                        <p className="text-center text-sm leading-6 text-gray-500 hover:text-gray-600">Work : Lorem ipsum dolor sit amet consectetur, adipisicing elit. Architecto, placeat!</p>
+                        <span className="rounded-full bg-yellow-200 px-2 py-1 text-sm font-medium text-yellow-700"><FontAwesomeIcon className='mr-1' icon={faUsers}/> multiple resolver</span> 
+                        <p className='text-slate-800 my-2'>
+                            You can select any one!
+                        </p>
+                        <div class="flex w-full justify-center">
+                            <select
+                                className="text-base w-full rounded-lg border px-2 py-3 shadow-sm outline-none focus:ring focus:ring-campus-green focus:ring-opacity-30 pr-5"
+                                name="QueryCategory"
+                                id="QueryCategory"
+                                value=""
+                            >
+                                <option value="Dr. Hiteishi Diwanji">Dr. Hiteishi Diwanji</option>
+                                <option value="Dr. Mehul Parikh">Dr. Mehul Parikh</option>
+                                <option value="BAKULBHAI PANCHAL">BAKULBHAI PANCHAL</option>
+                            </select>
+                        </div>
+                        <p className="text-left text-sm leading-6 text-gray-500 hover:text-gray-600 my-5"><span className='text-slate-800'>Work :</span> Lorem ipsum dolor sit amet consectetur, adipisicing elit. Architecto, placeat!</p>
                         <ul className="mt-3 divide-y rounded bg-gray-100 py-2 px-3 text-gray-600 shadow-sm hover:text-gray-700 hover:shadow">
                             <li className="flex items-center py-3 text-sm">
                                 <span>Category</span>
@@ -49,7 +67,7 @@ export default function Destination() {
                 <div className="grid space-y-3">
                     <div className="relative flex items-start">
                         <div className="flex items-center h-5 mt-1">
-                            <input ref={postVisibilityInpt} name='QueryVisibility' id="GlobalVisibility" value="Global" type="radio" defaultChecked/>
+                            <input ref={postVisibilityInpt} name='QueryVisibility' id="GlobalVisibility" value="Global" type="radio" defaultChecked />
                         </div>
                         <label htmlFor='GlobalVisibility' className="ms-3">
                             <span className="block text-base text-campus-green">Global</span>

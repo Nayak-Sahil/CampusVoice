@@ -1,10 +1,11 @@
 "use client"
 import Image from 'next/image'
-import React, { useState } from 'react'
+import React, { useState, useContext } from 'react'
 import logo from '../../../public/CampusVoice.png'
 import Link from 'next/link'
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
 import { faBars, faClose } from '@fortawesome/free-solid-svg-icons'
+import NavListContext from '@/Contexts/NavListContext'
 
 export default function MobileNav() {
     const [isOpen, setIsOpen] = useState(false);
@@ -12,6 +13,9 @@ export default function MobileNav() {
     const handleHamburger = () =>{
         setIsOpen(e => !e);
     }
+
+    const navListCntxt = useContext(NavListContext);
+    const navList = navListCntxt.getNavListInfo;
 
     return (
         <header x-data="{ isOpen: false }" className="w-full bg-sidebar py-5 px-6 sm:hidden">
@@ -23,45 +27,36 @@ export default function MobileNav() {
             </div>
 
             <nav className="flex-col pt-4" style={isOpen ? {display : "flex"} : {display: "none"}}>
-                <Link href="/" className="flex items-center active-nav-link text-black py-2 pl-4 nav-item">
+                {
+                    navList.map((list, index)=>{
+                        return (
+                            <Link href={list.link} key={index} className={`flex items-centertext-black py-3 pl-4 nav-item cursor-auto`}>
+                                <FontAwesomeIcon className='text-gray-600 mt-1' width={25} icon={list.icon} />
+                                <p className="text-base tracking-wide">{list.listName}</p>
+                            </Link>
+                        )
+                    })
+                }
+                {/* <Link href="/" className="flex items-center active-nav-link text-black py-2 pl-4 nav-item">
                     <i className="fas fa-tachometer-alt mr-3"></i>
                     Dashboard
                 </Link>
-                <a href="blank.html" className="flex items-center text-black opacity-75 hover:opacity-100 py-2 pl-4 nav-item">
-                    <i className="fas fa-sticky-note mr-3"></i>
-                    Blank Page
-                </a>
-                <a href="tables.html" className="flex items-center text-black opacity-75 hover:opacity-100 py-2 pl-4 nav-item">
-                    <i className="fas fa-table mr-3"></i>
-                    Tables
-                </a>
-                <a href="forms.html" className="flex items-center text-black opacity-75 hover:opacity-100 py-2 pl-4 nav-item">
-                    <i className="fas fa-align-left mr-3"></i>
-                    Forms
-                </a>
-                <a href="tabs.html" className="flex items-center text-black opacity-75 hover:opacity-100 py-2 pl-4 nav-item">
-                    <i className="fas fa-tablet-alt mr-3"></i>
-                    Tabbed Content
-                </a>
-                <a href="calendar.html" className="flex items-center text-black opacity-75 hover:opacity-100 py-2 pl-4 nav-item">
-                    <i className="fas fa-calendar mr-3"></i>
-                    Calendar
-                </a>
                 <a href="#" className="flex items-center text-black opacity-75 hover:opacity-100 py-2 pl-4 nav-item">
                     <i className="fas fa-cogs mr-3"></i>
-                    Support
+                    Ask Query
                 </a>
                 <a href="#" className="flex items-center text-black opacity-75 hover:opacity-100 py-2 pl-4 nav-item">
                     <i className="fas fa-user mr-3"></i>
-                    My Account
+                    Track
                 </a>
                 <a href="#" className="flex items-center text-black opacity-75 hover:opacity-100 py-2 pl-4 nav-item">
                     <i className="fas fa-sign-out-alt mr-3"></i>
-                    Sign Out
+                    View Other Query
                 </a>
-                <button className="w-full bg-white cta-btn font-semibold py-2 mt-3 rounded-lg shadow-lg hover:shadow-xl hover:bg-gray-300 flex items-center justify-center">
-                    <i className="fas fa-arrow-circle-up mr-3"></i> Upgrade to Pro!
-                </button>
+                <a href="#" className="flex items-center text-black opacity-75 hover:opacity-100 py-2 pl-4 nav-item">
+                    <i className="fas fa-sign-out-alt mr-3"></i>
+                    Help Support
+                </a> */}
             </nav>
         </header>
     )

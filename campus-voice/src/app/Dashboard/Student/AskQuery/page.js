@@ -28,7 +28,7 @@ export default function page() {
                 {/* Mobile Nav */}
                 <MobileNav />
                 <div className="w-full overflow-x-hidden border-t flex flex-col">
-                    <main className="w-full flex-grow p-6">
+                    <main className="w-full flex-grow px-6 py-3">
                         <section className="shadow-gray-100 mx-auto max-w-screen-lg rounded-xl bg-white text-gray-600 shadow-lg sm:border">
                             <div className="container mx-auto flex flex-col flex-wrap px-5 pb-5">
                                 <div className="bg-slate-50 rounded-xl mx-auto mt-4 mb-7 flex w-full flex-wrap items-center space-x-4 py-4 md:justify-center md:px-10">

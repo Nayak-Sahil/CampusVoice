@@ -1,7 +1,7 @@
 "use client";
 import QueryContext from "@/Contexts/QueryContext";
 import { QuerySchema } from "@/Schemas/QuerySchema";
-import { faClose, faCloudArrowUp, faPaperclip } from "@fortawesome/free-solid-svg-icons";
+import { faClose, faCloudArrowUp, faLayerGroup, faPaperclip, faTriangleExclamation } from "@fortawesome/free-solid-svg-icons";
 import { faCircleXmark } from "@fortawesome/free-regular-svg-icons";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { useFormik } from "formik";
@@ -10,6 +10,7 @@ import React, { useContext, useEffect, useRef, useState } from "react";
 import "../../app/globals.css"
 import pdfIcon from "../../../public/icons/pdf.svg"
 import wordIcon from "../../../public/icons/word.svg"
+import CategoryDialog from "./CategoryDialog";
 
 const initialValues = {
   QueryTitle: "",
@@ -21,6 +22,11 @@ export default function WriteQuery() {
   const imageInputRef = useRef(null);
   const contextQuery = useContext(QueryContext);
   const [selectedImages, setselectedImages] = useState([]);
+  // * Document Attachment Dialog Modal
+  let attachDocModel = useRef(null);
+  // * Category Selection Dialog Modal
+  const [isCategoryModalOpen, setCategoryModal] = useState(false);
+
   const { values, touched, errors, handleBlur, handleChange, handleSubmit } = useFormik({
     initialValues: initialValues,
     validationSchema: QuerySchema,
@@ -50,11 +56,12 @@ export default function WriteQuery() {
     imageInputRef.current.value = "";
   }
 
-  // * open dialog model
-  let attachDocModel = useRef(null);
-
   function openDocModal() {
     attachDocModel.current.showModal();
+  }
+
+  function openCategoryModal() {
+    setCategoryModal(true);
   }
 
   return (
@@ -70,14 +77,14 @@ export default function WriteQuery() {
         <div className="mt-4 flex flex-col items-center w-full">
           <div className="w-full mb-1 flex justify-between sm:col-span-3">
             <div className="w-[68%] mb-3 flex flex-col sm:col-span-3">
-              <label
-                htmlFor="QueryTitle"
-                className="mb-2 text-gray-800"
-              >
+              <label htmlFor="QueryTitle" className="mb-2 text-gray-800 flex">
                 Regarding
+                {touched.QueryTitle && errors.QueryTitle ?
+                  <p className="ml-2 text-red-500">
+                    <FontAwesomeIcon className="text-lg" icon={faTriangleExclamation} /> {errors.QueryTitle}
+                  </p> : ""}
               </label>
-              <input
-                className="appearance-none w-full rounded-lg border px-2 py-2 shadow-sm text-gray-700 leading-tight focus:outline-none focus:ring focus:shadow-outline"
+              <input className={`appearance-none w-full rounded-lg border px-2 py-2 shadow-sm text-gray-700 leading-tight focus:outline-none focus:shadow-outline focus:ring ${errors.QueryTitle ? "focus:outline-none focus:shadow-outline focus:ring-red-300" : "focus:ring-campus-green focus:ring-opacity-40"}`}
                 name="QueryTitle"
                 id="QueryTitle"
                 type="text"
@@ -86,16 +93,13 @@ export default function WriteQuery() {
                 onChange={handleChange}
                 onBlur={handleBlur}
               />
-              {touched.QueryTitle && errors.QueryTitle ? <p className="mt-2 text-red-500">{errors.QueryTitle}</p> : ""}
             </div>
             <div className="w-[30%] mb-3 flex flex-col sm:col-span-3">
-              <label
-                className="mb-2 text-gray-800"
-                htmlFor="QueryCategory"
-              >
+              <label className="mb-2 text-gray-800 flex" htmlFor="QueryCategory">
                 Category
+                {touched.QueryCategory && errors.QueryCategory ? <p className="ml-2 text-red-500"><FontAwesomeIcon className="text-lg" icon={faTriangleExclamation} /> {errors.QueryCategory}</p> : ""}
               </label>
-              <select
+              {/* <select
                 className="rounded-lg border px-2 py-2 shadow-sm outline-none focus:ring pr-5"
                 name="QueryCategory"
                 id="QueryCategory"
@@ -108,25 +112,31 @@ export default function WriteQuery() {
                 <option value="Parking">Parking</option>
                 <option value="Study">Study</option>
                 <option value="Department">Department</option>
-              </select>
-              {touched.QueryCategory && errors.QueryCategory ? <p className="mt-2 text-red-500">{errors.QueryCategory}</p> : ""}
+              </select> */}
+              <button
+                type="button"
+                onClick={openCategoryModal}
+                className="group order-1 flex w-full items-center justify-center rounded-lg bg-gray-100 py-[6px] text-center text-gray-600 outline-none transition 
+                sm:w-full focus:ring focus:ring-campus-green focus:ring-opacity-40 hover:bg-gray-200"
+              >
+                <FontAwesomeIcon icon={faLayerGroup}></FontAwesomeIcon>
+                <span className="ml-2 mt-1">Select Category</span>
+              </button>
             </div>
           </div>
           <div className="w-full mb-1 flex flex-col sm:col-span-3">
-            <label
-              className="mb-2 text-gray-800"
-              htmlFor="QueryDetails"
-            >
+            <label className="mb-2 text-gray-800 flex" htmlFor="QueryDetails">
               Message
+              {touched.QueryDetails && errors.QueryDetails ? <p className="ml-2 text-red-500"><FontAwesomeIcon className="text-lg" icon={faTriangleExclamation} /> {errors.QueryDetails}</p> : ""}
             </label>
-            {touched.QueryDetails && errors.QueryDetails ? <p className="mb-2 text-red-500">{errors.QueryDetails}</p> : ""}
+
             <textarea
-              className="appearance-none w-full rounded-lg border px-2 py-2 shadow-smtext-gray-700 leading-tight focus:outline-none focus:ring focus:shadow-outline"
+              className={`appearance-none w-full rounded-lg border px-2 py-2 shadow-smtext-gray-700 leading-tight focus:outline-none focus:ring focus:shadow-outline ${errors.QueryDetails ? "focus:outline-none focus:shadow-outline focus:ring-red-300" : "focus:ring-campus-green focus:ring-opacity-40"}`}
               name="QueryDetails"
               id="QueryDetails"
               type="text"
               placeholder="Message... ..."
-              rows="12"
+              rows="7"
               value={values.QueryDetails}
               onChange={handleChange}
               onBlur={handleBlur}
@@ -137,7 +147,7 @@ export default function WriteQuery() {
           <button
             type="button"
             onClick={openDocModal}
-            className="group order-1 my-2 flex w-full items-center justify-center rounded-lg bg-gray-200 py-2 text-center text-gray-600 outline-none transition sm:w-44 focus:ring hover:bg-gray-300"
+            className="group order-1 my-2 flex w-full items-center justify-center rounded-lg bg-gray-100 py-2 text-center text-gray-600 outline-none transition sm:w-44 focus:ring hover:bg-gray-200"
           >
             <FontAwesomeIcon icon={faPaperclip}></FontAwesomeIcon>
             <span className="ml-2 mt-1">Attach Document</span>
@@ -145,7 +155,7 @@ export default function WriteQuery() {
           <div className="w-[350px] flex flex-col justify-between sm:flex-row">
             <button
               type="button"
-              className="group order-1 my-2 flex w-full items-center justify-center rounded-lg bg-gray-200 py-2 text-center font-bold text-gray-600 outline-none transition sm:w-40 focus:ring hover:bg-gray-300"
+              className="group order-1 my-2 flex w-full items-center justify-center rounded-lg bg-gray-100 py-2 text-center font-bold text-gray-600 outline-none transition sm:w-40 hover:bg-gray-200"
             >
               Cancel
             </button>
@@ -172,6 +182,7 @@ export default function WriteQuery() {
           </div>
         </div>
       </form>
+      {/* Document Attachment Dialog */}
       <dialog className="w-[700px] h-max p-5 rounded" ref={attachDocModel} id="attachDocModel">
         <div className="flex items-center justify-between">
           <h2 className="text-lg">Attach Document.</h2>
@@ -221,22 +232,22 @@ export default function WriteQuery() {
                             <FontAwesomeIcon className="absolute delay-100 text-campus-dark py-[6px] px-[8px] rounded-full z-50 top-1 right-2 bg-gray-100" onClick={(e) => { e.preventDefault(); removeImage(index) }} onMouseOver={(e) => e.target.style.scale = "1.2"} onMouseOut={(e) => e.target.style.scale = "1.0"} icon={faClose} />
                           </div>
                           :
-                        file.type.startsWith("application/vnd.openxmlformats-officedocument.wordprocessingml.document") ?
-                          <div className="justify-normal items-start z-30 px-1 relative overflow-hidden" key={index}>
-                            <Image
-                              key={index}
-                              src={wordIcon}
-                              alt={`${file}`}
-                              className="rounded-lg border p-5 my-4 mx-4 z-30"
-                              width={80}
-                              height={80}
-                              style={{ minWidth: "100px", minHeight: "80px" }}
-                            />
-                            <p className="w-28 text-center truncate">{file.name}</p>
-                            <FontAwesomeIcon className="absolute delay-100 text-campus-dark py-[6px] px-[8px] rounded-full z-50 top-1 right-2 bg-gray-100" onClick={(e) => { e.preventDefault(); removeImage(index) }} onMouseOver={(e) => e.target.style.scale = "1.2"} onMouseOut={(e) => e.target.style.scale = "1.0"} icon={faClose} />
-                          </div>
-                          : 
-                          alert("This file type is not supported.\nAllowed Types: .Docx, .PNG, .PDF, .JPG")
+                          file.type.startsWith("application/vnd.openxmlformats-officedocument.wordprocessingml.document") ?
+                            <div className="justify-normal items-start z-30 px-1 relative overflow-hidden" key={index}>
+                              <Image
+                                key={index}
+                                src={wordIcon}
+                                alt={`${file}`}
+                                className="rounded-lg border p-5 my-4 mx-4 z-30"
+                                width={80}
+                                height={80}
+                                style={{ minWidth: "100px", minHeight: "80px" }}
+                              />
+                              <p className="w-28 text-center truncate">{file.name}</p>
+                              <FontAwesomeIcon className="absolute delay-100 text-campus-dark py-[6px] px-[8px] rounded-full z-50 top-1 right-2 bg-gray-100" onClick={(e) => { e.preventDefault(); removeImage(index) }} onMouseOver={(e) => e.target.style.scale = "1.2"} onMouseOut={(e) => e.target.style.scale = "1.0"} icon={faClose} />
+                            </div>
+                            :
+                            alert("This file type is not supported.\nAllowed Types: .Docx, .PNG, .PDF, .JPG")
                     ))
                   }
                 </div>
@@ -263,6 +274,9 @@ export default function WriteQuery() {
           </div>
         </main>
       </dialog>
+
+      {/* One thing remember that when we pass state variable into child component then everytime unnecessary child component get re-render */}
+      <CategoryDialog isModalOpen={isCategoryModalOpen} setModal={setCategoryModal} />
     </>
   );
 }

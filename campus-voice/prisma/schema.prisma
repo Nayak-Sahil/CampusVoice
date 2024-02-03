@@ -22,3 +22,5 @@ model user_info {
   image  String    @db.VarChar(255)
   user   user_auth @relation(fields: [uid], references: [uid])
 }
+
+// add into query table: status modiefied datetime
