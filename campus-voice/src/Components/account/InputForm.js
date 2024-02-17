@@ -2,36 +2,55 @@
 import { signIn } from 'next-auth/react';
 import { useState } from 'react';
 import { Alert } from './Alert';
-import { redirect } from 'next/navigation';
+import { redirect, usePathname } from 'next/navigation';
 import { useRouter } from 'next/navigation';
 
 const InputForm = () => {
   const [alertMsg, setAlertMsg] = useState("");
   const [loading, setLoading] = useState(false);
   const router = useRouter();
+  const pathname = usePathname();
+
   async function handleSubmit(e) {
     e.preventDefault(); // Prevent the default form submission behavior
-  
+    console.log(e.target.uid.value, e.target.password.value)
     setLoading(true);
+    const passField = document.querySelector("[type = password]");
+        if(pathname == '/Account/Student' && e.target.uid.value.startsWith('1') || (pathname == '/Account/QueryResolver' && e.target.uid.value.startsWith('0') && !e.target.uid.value.toString().contains('@'))){
+          setTimeout(() => {
+            setAlertMsg("");
+          }, 3000);
+          setAlertMsg("Please provide valid uid!");
+          return;
+        }
+
+
+        setLoading(true);
     const res = await signIn('credentials', { uid: e.target.uid.value, password: e.target.password.value, redirect: false });
   
     if (!res.ok && res.status !== 200) {
       setTimeout(() => {
         setAlertMsg("");
+        passField.style.border = "1px solid black";
       }, 3000);
-      setAlertMsg(res.error);
       setLoading(false);
+      setAlertMsg(res.error);
+            if(res.error === "Invalid user!"){
+              passField.value = "";
+              passField.style.border = "3px solid red";
+            }
     }
   
     setTimeout(() => {
-      if (res.ok && res.status === 200) {
-        if (res.url === 'http://localhost:3000/Account/QueryResolver') {
-          router.push('/Dashboard/QueryResolver');
-        } else {
-          router.push('/Dashboard/Student');
+      if(res.ok && res.status === 200){
+        if(pathname === '/Account/QueryResolver'){
+            router.push('/Dashboard/QueryResolver')
+        }else{
+            router.push('/Dashboard/Student');
         }
-      }
-    }, 500);
+        setLoading(false);
+      }
+    }, 500);
   }
   return (
     <form onSubmit={handleSubmit}>

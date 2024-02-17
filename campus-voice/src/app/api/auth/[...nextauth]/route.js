@@ -1,7 +1,8 @@
 import CryptoJS from "crypto-js";
 import NextAuth from "next-auth/next"
 import Credentials from "next-auth/providers/credentials"
-import { PrismaClientSend } from "../../prisma_client";
+// import prisma from "../../prisma_client";
+import prisma from "../../prisma_client";
 
 export const authOptions = {
     providers: [
@@ -15,7 +16,7 @@ export const authOptions = {
                 try {
                     let uidtype; //0 if uid is number , else 1 for email
                     let user; // to save user data collected from database
-                    const prisma_client = PrismaClientSend(); // including prisma client
+                    const prisma_client = prisma; // including prisma client
                     if (!req.body.callbackUrl.includes("Student")) {
                         uidtype = 1;
                     } else {
@@ -25,7 +26,7 @@ export const authOptions = {
                     const emailRegEx = new RegExp(/^([a-zA-Z0-9._%-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,})+$/);
                     const numericUidRegEx = new RegExp(/^[0-9]{8}$/);
                     if (uidtype === 1 && emailRegEx.test(credentials.uid)) {
-                        user = await prisma_client.user_info.findUnique({
+                        user = await prisma.userInfo.findUnique({
                             where:{
                                 email:credentials.uid
                             },
@@ -33,10 +34,13 @@ export const authOptions = {
                                 user:true
                             },
                         });
-                        user = user.user;
-                        
+                        if(!user){
+                            throw new Error("User not found!");
+                        }
+                        user.password = user.user.password;
+                        user.userInfo = {image: user.image};
                     } else if ((uidtype ===  1 || uidtype === 0 )&& numericUidRegEx.test(credentials.uid)) {
-                        user = await prisma_client.user_auth.findUnique({
+                        user = await prisma.userAuth.findUnique({
                             where:{uid:credentials.uid},
                             include:{
                                 userInfo:true
@@ -53,7 +57,7 @@ export const authOptions = {
                         throw new Error("User not found!");
                     }
                     if(user && user.password === hashpass){
-                        prisma_client.$disconnect();
+                        prisma.$disconnect();
                         let role;
                         if(user.uid.charAt(0) === '0'){
                             role = "student";
@@ -64,7 +68,7 @@ export const authOptions = {
                         return {
                             uid:user.uid,
                             role:role,
-                            image:user.userInfo.image
+                            image:user.userInfo?.image
                         }
                     }
                     
