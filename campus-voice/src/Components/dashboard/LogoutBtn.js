@@ -32,7 +32,8 @@ const LogoutBtn = () => {
   const router = useRouter();
   const handleSignOut = async (e) => {
     e.preventDefault();
-    await signOut({callbackUrl:'http://localhost:3000/Account'});
+    const callbackUrl = process.env.NEXT_PUBLIC_CURR_DOMAIN+'/Account';
+    await signOut({callbackUrl});
   };
 
   return (

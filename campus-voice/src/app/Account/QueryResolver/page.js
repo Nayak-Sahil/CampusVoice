@@ -7,7 +7,7 @@ import InputForm from '../../../Components/account/InputForm';
 import { getSession } from 'next-auth/react';
 
 
-const page = async() => {
+const page = () => {
   return (
     <section className="h-screen bg-gradient-to-bl from-[#23b679] via-[#e0f2eb] to-[#b4e2ce] text-campus-dark">
       <div className="h-full flex items-center justify-center px-4">

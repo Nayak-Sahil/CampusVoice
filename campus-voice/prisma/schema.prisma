@@ -7,20 +7,126 @@ datasource db {
   url      = env("DATABASE_URL")
 }
 
-model user_auth {
-  uid       String     @id @db.VarChar(20)
-  password  String     @db.VarChar(255)
-  modifyAt  DateTime   @updatedAt @db.Date
-  createdAt DateTime   @updatedAt @db.Date
-  userInfo  user_info?
+model UserAuth {
+  uid       String    @id @db.VarChar(20)
+  password  String    @db.VarChar(255)
+  modifyAt  DateTime  @updatedAt @db.Date
+  createdAt DateTime  @default(now()) @db.Date
+  userInfo  UserInfo?
+  resolver  Resolver?
+  quries    Queries[]
+
+  @@map("user_auth")
 }
 
-model user_info {
-  uid String    @id @db.VarChar(20)
-  email  String    @unique @db.VarChar(255)
-  name   String    @db.VarChar(255)
-  image  String    @db.VarChar(255)
-  user   user_auth @relation(fields: [uid], references: [uid])
+model UserInfo {
+  uid   String   @id @db.VarChar(20)
+  email String   @unique @db.VarChar(255)
+  name  String   @db.VarChar(255) //name of student as well as of Resolver
+  image String   @db.VarChar(255)
+  user  UserAuth @relation(fields: [uid], references: [uid], onDelete: Cascade, onUpdate: Cascade)
+
+  @@map("user_info")
+}
+
+model Resolver {
+  resolver_id   String @id @db.VarChar(20)
+  resolver_role String @db.VarChar(50)
+
+  user           UserAuth       @relation(fields: [resolver_id], references: [uid], onDelete: Cascade, onUpdate: Cascade)
+  domains        Domain[]
+  subdomains     Subdomain[]
+  IssueType      IssueType[]
+  HandledBy      IssueMapping[] @relation("resolver")
+  MasterBy       IssueMapping[] @relation("master")
+  quriesResolved Queries[]
+
+  @@map("resolver")
+}
+
+model Domain {
+  domain_id   Int    @id @default(autoincrement()) @db.Integer
+  domain_name String @db.VarChar(100)
+  domain_desc String @db.VarChar(255)
+  master_id   String @db.VarChar(20)
+
+  resolver  Resolver    @relation(fields: [master_id], references: [resolver_id], onDelete: Cascade, onUpdate: Cascade)
+  subdomain Subdomain[]
+
+  @@map("domain")
+}
+
+model Subdomain {
+  subdomain_id      Int    @id @db.Integer
+  domain_id      Int    @db.Integer
+  subdomain_name String @db.VarChar(255)
+  desc           String @db.VarChar(255)
+  master_id      String @db.VarChar(20)
+
+  resolver Resolver @relation(fields: [master_id], references: [resolver_id], onDelete: Cascade, onUpdate: Cascade)
+  domain   Domain   @relation(fields: [domain_id], references: [domain_id], onDelete: Cascade, onUpdate: Cascade)
+
+  issues IssueType[]
+
+  @@map("subdomain")
+}
+
+model IssueType {
+  issue_id     String @id @db.VarChar(6)
+  issue_type   String @db.VarChar(255)
+  subdomain_id Int    @db.Integer
+  created_by   String @db.VarChar(20)
+
+  subdomain    Subdomain      @relation(fields: [subdomain_id], references: [subdomain_id], onDelete: Cascade, onUpdate: Cascade)
+  creater      Resolver       @relation(fields: [created_by], references: [resolver_id], onDelete: Cascade, onUpdate: Cascade)
+  issueMapping IssueMapping[]
+  queries      Queries[]
+
+  @@map("issue_type")
+}
+
+model IssueMapping {
+  map_id      Int    @id @default(autoincrement()) @db.Integer
+  issue_id    String @db.VarChar(6)
+  resolver_id String @db.VarChar(20)
+  master_id   String @db.VarChar(20)
+
+  issue    IssueType @relation(fields: [issue_id], references: [issue_id], onDelete: Cascade, onUpdate: Cascade)
+  resolver Resolver  @relation("resolver", fields: [resolver_id], references: [resolver_id], onDelete: Cascade, onUpdate: Cascade)
+  master   Resolver  @relation("master", fields: [master_id], references: [resolver_id], onDelete: Cascade, onUpdate: Cascade)
+
+  @@map("issue_mapping")
+}
+
+model Queries {
+  query_id     Int      @id @default(autoincrement()) @db.Integer
+  sender_id    String   @db.VarChar(20)
+  receiver_id  String   @db.VarChar(20)
+  issue_id     String   @db.VarChar(6)
+  query_title  String   @db.VarChar(100)
+  query_desc   String   @db.VarChar(3000)
+  query_type   String   @default("local") @db.VarChar(20)
+  identity     Boolean  @default(true) @db.Boolean
+  query_status String   @default("sent") @db.VarChar(20)
+  createdAt    DateTime @default(now()) @db.Date
+
+  sender   UserAuth  @relation(fields: [sender_id], references: [uid], onDelete: Cascade, onUpdate: Cascade)
+  receiver Resolver  @relation(fields: [receiver_id], references: [resolver_id], onDelete: Cascade, onUpdate: Cascade)
+  issue    IssueType @relation(fields: [issue_id], references: [issue_id], onDelete: Cascade, onUpdate: Cascade)
+
+  queryImages QueryImages[]
+
+  @@map("queries")
+}
+
+model QueryImages {
+  query_id Int    @db.Integer
+  image    String @db.VarChar(255)
+
+  query Queries @relation(fields: [query_id], references: [query_id], onDelete: Cascade, onUpdate: Cascade)
+
+  @@unique([query_id, image])
+  @@map("query_images")
 }
 
 // add into query table: status modiefied datetime

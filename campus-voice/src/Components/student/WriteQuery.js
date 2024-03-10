@@ -63,6 +63,15 @@ export default function WriteQuery() {
       alert("Cannot add more than 5 files!");
       return;
     }
+
+    //remove files if not image
+    const filteredFiles = files.filter(file => file.type.startsWith("image") || file.type.startsWith("application/pdf") || file.type.startsWith("application/vnd.openxmlformats-officedocument.wordprocessingml.document"));
+    if (filteredFiles.length !== files.length) {
+      alert("Only image, pdf and word files are allowed!");
+      return;
+    }
+
+
     setselectedImages(prevImages => [...prevImages, ...files]);
   }
 
@@ -249,7 +258,9 @@ export default function WriteQuery() {
                               <FontAwesomeIcon className="absolute delay-100 text-campus-dark py-[6px] px-[8px] rounded-full z-50 top-1 right-2 bg-gray-100" onClick={(e) => { e.preventDefault(); removeImage(index) }} onMouseOver={(e) => e.target.style.scale = "1.2"} onMouseOut={(e) => e.target.style.scale = "1.0"} icon={faClose} />
                             </div>
                             :
-                            alert("This file type is not supported.\nAllowed Types: .Docx, .PNG, .PDF, .JPG")
+                            (
+                              null
+                            )
                     ))
                   }
                 </div>
@@ -264,7 +275,7 @@ export default function WriteQuery() {
                   </div>
                 </>
               }
-              <input ref={imageInputRef} onInput={handleImageInput} multiple="multiple" accept=".jpg,.png,.jpeg,.pdf,.csv" id="dropzone-file" type="file" className="hidden" />
+              <input ref={imageInputRef} onInput={handleImageInput} multiple="multiple" accept="image/*,.pdf,.docx" id="dropzone-file" type="file" className="hidden" />
             </label>
           </div>
           <div className="w-full h-[30px] items-center mt-3 mb-1 flex justify-between sm:col-span-3">
