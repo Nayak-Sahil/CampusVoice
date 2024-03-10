@@ -21,9 +21,9 @@ export const NavListState = (props) => {
       link: "/Dashboard/Student/TrackQuery",
     },
     {
-      listName: "View Other Query",
+      listName: "Community",
       icon: "fa-solid fa-user-group",
-      link: "/",
+      link: "/Dashboard/Student/Community",
     },
     {
       listName: "Help Support",

@@ -45,7 +45,7 @@ export default function SendQuery() {
                 </div>
                 <div className='border-2 py-2 px-4 rounded-xl'>
                     <p className='text-campus-green'>Your Query Category:</p>
-                    <p className='mt-1 text-sm'><FontAwesomeIcon width={15} icon={faLayerGroup}></FontAwesomeIcon> <span className='ml-1'>{QueryCategory}</span></p>
+                    <p className='mt-1 text-sm'><FontAwesomeIcon width={15} icon={faLayerGroup}></FontAwesomeIcon> <span className='ml-1'>{QueryCategory.queryDomain} / {QueryCategory.querySubDomain} / {QueryCategory.queryIssueType}</span></p>
                 </div>
                 <div className='border-2 py-2 px-4 rounded-xl'>
                     <p className='text-campus-green'>Query Resolver:</p>

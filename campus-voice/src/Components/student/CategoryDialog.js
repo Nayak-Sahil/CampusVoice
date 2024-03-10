@@ -1,15 +1,17 @@
 "use client"
-import React, { useRef, useState } from 'react'
+import React, { useEffect, useRef, useState } from 'react'
 import { faArrowRight, faBriefcase, faBuildingColumns, faCircleNodes, faHashtag, faHotel, faLayerGroup, faPizzaSlice, faReceipt, faSearch } from "@fortawesome/free-solid-svg-icons";
 import { faBuilding, faCircleXmark, faCircleCheck, faCircle } from "@fortawesome/free-regular-svg-icons";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 
-const CategoryDialog = React.memo(({ isModalOpen, setModal }) => {
+const CategoryDialog = React.memo(({ isModalOpen, setModal, formState }) => {
     // console.warn("re-rendering child component")
     const categoryDialogBox = useRef();
-    if (isModalOpen) {
-        categoryDialogBox.current.showModal();
-    }
+    useEffect(()=>{
+        if (isModalOpen) {
+            categoryDialogBox.current.showModal();
+        }
+    }, [isModalOpen])
 
     const queryTicket = {
         queryDomain: null,
@@ -21,34 +23,50 @@ const CategoryDialog = React.memo(({ isModalOpen, setModal }) => {
     const [ticket, setTicket] = useState(queryTicket);
 
     function nextToSubDomain(selectedDomain) {
-        setTicket({
-            ...ticket,
+        setTicket(prevState => ({
+            ...prevState,
             status: "ON_SUBDOMAIN",
             queryDomain: selectedDomain
-        })
+        }))
     }
 
     function nextToIssueType(selectedSubDomain) {
-        setTicket({
-            ...ticket,
+        setTicket(prevState => ({
+            ...prevState,
             status: "ON_ISSUE_TYPE",
             querySubDomain: selectedSubDomain
-        })
+        }))
     }
     
     function ticketSelectionDone(selectedIssueType){
-        setTicket({
-            ...ticket,
+        console.error(selectedIssueType);
+        setTicket(prevState => ({
+            ...prevState,
             status: "TICKET_SELECTION_COMPLETED",
             queryIssueType: selectedIssueType
-        })
-        console.warn(ticket);
+        }))
+        //* since state variable changing is asynchronous so we can't just update formstate after this line therefor we have to do it when it get completed changed
+    }
+    
+    useEffect(()=>{
+        if(ticket.status === "TICKET_SELECTION_COMPLETED"){
+            formState.setCategoryData({
+                ...formState.getCategoryData,
+                selectedCategoryData: ticket,
+                dataEntered: true
+            });
+        }
+    }, [ticket.status])
+
+    if(formState.dataEntered){
+        categoryDialogBox.current.close();
+        setModal(false);
     }
 
     const data = [{ issueType: "Hostel Problem" }, { issueType: "Water Problem" }, {issueType: "Food Probelm"}]
 
     return (
-        <dialog className="w-[700px] h-max px-6 py-5 rounded shadow-md" ref={categoryDialogBox} id="categoryDialogBox">
+        <dialog className="w-[700px] h-max px-6 py-5 rounded shadow-md fixed m-auto" ref={categoryDialogBox} id="categoryDialogBox">
             <div className="flex items-center justify-between">
                 <h2 className="text-lg text-slate-800 flex w-[450px] h-6 items-center">
                     <FontAwesomeIcon className="mr-2" width={15} icon={faLayerGroup} />
@@ -88,7 +106,7 @@ const CategoryDialog = React.memo(({ isModalOpen, setModal }) => {
                             <SubDomainsModal onSubmit={nextToIssueType} /> 
                             : ticket.status === "ON_ISSUE_TYPE" ? 
                                 <IssueTypeModal onSubmit={ticketSelectionDone} data={data} /> 
-                                : ""
+                                : "Great Done!"
                 }
             </main>
         </dialog>
@@ -251,7 +269,6 @@ export const IssueTypeModal = ({ onSubmit, data }) => {
     }
 
     function handleCheckedIssueType(e) {
-        console.warn(e.target.value)
         setCheckedIssueType(e.target.value);
     }
 
@@ -277,11 +294,12 @@ export const IssueTypeModal = ({ onSubmit, data }) => {
                 </div>
                 <div className="flex flex-col w-full h-[350px]  my-2 border-black">
                     {
-                        getData.map((obj)=>{
+                        getData.map((obj, index)=>{
                             return (
-                                <div className=' mb-2 relative peer w-full flex h-12 items-center justify-between rounded-md text-slate-700 cursor-pointer'>
-                                    <input className='absolute peer' hidden type="radio" name="IssueTyperadio" id={obj.issueType} value="Issue Hostel" onChange={(e) => { handleCheckedIssueType(e) }} />
-                                    <label className='peer-checked:border-campus-green peer-checked:border-opacity-50 border-2 rounded-md flex w-full p-3 pr-10 duration-300 peer-checked:border-2' htmlFor={obj.issueType}>
+                                <div className={`group/item mb-2 relative peer w-full flex h-12 items-center justify-between rounded-md text-slate-700 cursor-pointer`}>
+                                    <span className={`group-hover/item:visible invisible absolute right-28 rounded-full bg-gray-300 text-black px-3 pt-1 text-xs font-normal`}>It is about Food Related</span>
+                                    <input key={index} className='absolute peer' hidden type="radio" name="IssueTyperadio" id={obj.issueType} value={obj.issueType} onChange={(e) => { handleCheckedIssueType(e) }} />
+                                    <label className={` peer-checked:border-campus-green peer-checked:border-opacity-50 border-2 rounded-md flex w-full p-3 pr-10 duration-300 peer-checked:border-2`} htmlFor={obj.issueType}>
                                         <p className='w-max flex h-full items-center'>
                                             <FontAwesomeIcon icon={faHashtag} />
                                             <span className='ml-3 -mb-1'>{obj.issueType}</span>
