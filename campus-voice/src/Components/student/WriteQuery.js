@@ -26,19 +26,33 @@ export default function WriteQuery() {
   let attachDocModel = useRef(null);
   // * Category Selection Dialog Modal
   const [isCategoryModalOpen, setCategoryModal] = useState(false);
+  // * Category Error Label
+  let categErrorLabel = useRef(null);
+  // * Category Selection Data
+  const categoryDataState = {
+    selectedCategoryData: null,
+    dataEntered: false
+  }
+
+  const [getCategoryData, setCategoryData] = useState(categoryDataState);
+  console.warn(getCategoryData);
 
   const { values, touched, errors, handleBlur, handleChange, handleSubmit } = useFormik({
     initialValues: initialValues,
     validationSchema: QuerySchema,
     onSubmit: (values) => {
-      console.log(values);
-      const queryDetailsObj = {
-        ...contextQuery.queryData, ...values,
-        queryDataImages: selectedImages
-      };
-      console.log(touched, errors, values, selectedImages)
-      queryDetailsObj["FormState"] = "READ_DESTINATION";
-      contextQuery.setQueryData(queryDetailsObj);
+      // console.log(values);
+      if(getCategoryData.dataEntered === true){
+        const queryDetailsObj = {
+          ...contextQuery.queryData, ...values,
+          QueryDataImages: selectedImages,
+          QueryCategory: getCategoryData.selectedCategoryData
+        };
+        queryDetailsObj["FormState"] = "READ_DESTINATION";
+        contextQuery.setQueryData(queryDetailsObj);
+      }else{
+        categErrorLabel.current.innerHTML = `<FontAwesomeIcon className="text-lg" icon={faTriangleExclamation} /> Please, Select Category.`
+      }
     },
   });
 
@@ -72,6 +86,7 @@ export default function WriteQuery() {
 
   function openCategoryModal() {
     setCategoryModal(true);
+    setCategoryData(categoryDataState);
   }
 
   return (
@@ -107,22 +122,8 @@ export default function WriteQuery() {
             <div className="w-[30%] mb-3 flex flex-col sm:col-span-3">
               <label className="mb-2 text-gray-800 flex" htmlFor="QueryCategory">
                 Category
-                {touched.QueryCategory && errors.QueryCategory ? <p className="ml-2 text-red-500"><FontAwesomeIcon className="text-lg" icon={faTriangleExclamation} /> {errors.QueryCategory}</p> : ""}
+                <span className="ml-2 text-red-500 block" ref={categErrorLabel}></span>
               </label>
-              {/* <select
-                className="rounded-lg border px-2 py-2 shadow-sm outline-none focus:ring pr-5"
-                name="QueryCategory"
-                id="QueryCategory"
-                value={values.QueryCategory}
-                onChange={handleChange}
-                onBlur={handleBlur}
-              >
-                <option value="">Select Category</option>
-                <option value="Lab">Lab</option>
-                <option value="Parking">Parking</option>
-                <option value="Study">Study</option>
-                <option value="Department">Department</option>
-              </select> */}
               <button
                 type="button"
                 onClick={openCategoryModal}
@@ -130,7 +131,7 @@ export default function WriteQuery() {
                 sm:w-full focus:ring focus:ring-campus-green focus:ring-opacity-40 hover:bg-gray-200"
               >
                 <FontAwesomeIcon icon={faLayerGroup}></FontAwesomeIcon>
-                <span className="ml-2 mt-1">Select Category</span>
+                <span className="ml-2 mt-1">{(!getCategoryData.dataEntered) ? "Select Category" : "Update Selection"}</span>
               </button>
             </div>
           </div>
@@ -193,7 +194,7 @@ export default function WriteQuery() {
         </div>
       </form>
       {/* Document Attachment Dialog */}
-      <dialog className="w-[700px] h-max p-5 rounded" ref={attachDocModel} id="attachDocModel">
+      <dialog className="w-[700px] h-max p-5 rounded fixed m-auto" ref={attachDocModel} id="attachDocModel">
         <div className="flex items-center justify-between">
           <h2 className="text-lg">Attach Document.</h2>
           <button type="button" className="text-red-600 text-base hover:scale-125 ease-linear" onClick={() => { attachDocModel.current.close() }} id="closeDocModel"><FontAwesomeIcon icon={faCircleXmark}></FontAwesomeIcon></button>
@@ -288,7 +289,11 @@ export default function WriteQuery() {
       </dialog>
 
       {/* One thing remember that when we pass state variable into child component then everytime unnecessary child component get re-render */}
-      <CategoryDialog isModalOpen={isCategoryModalOpen} toggleModal={()=> setCategoryModal(e => !e)} />
+      {
+        getCategoryData.dataEntered === false ? 
+        <CategoryDialog formState={{getCategoryData, setCategoryData}} isModalOpen={isCategoryModalOpen} setModal={setCategoryModal} />
+        : ""
+      }
     </>
   );
 }

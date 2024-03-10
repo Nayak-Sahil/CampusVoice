@@ -6,8 +6,7 @@ import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import QueryContext from '@/Contexts/QueryContext';
 import '../../app/globals.css'
 
-
-const CategoryDialog = React.memo(({ isModalOpen, toggleModal }) => {
+const CategoryDialog = React.memo(({ isModalOpen, setModal, formState }) => {
     // console.warn("re-rendering child component")
 
     const queryContext = useContext(QueryContext);
@@ -20,12 +19,23 @@ const CategoryDialog = React.memo(({ isModalOpen, toggleModal }) => {
             getDomains();
         }
     }, [isModalOpen])
+  
+    useEffect(()=>{
+        if(ticket.status === "TICKET_SELECTION_COMPLETED"){
+            formState.setCategoryData({
+                ...formState.getCategoryData,
+                selectedCategoryData: ticket,
+                dataEntered: true
+            });
+        }
+    }, [ticket.status])
 
     const categoryDialogBox = useRef();
-    if (isModalOpen) {
-        categoryDialogBox.current.showModal();
-    }
-
+    useEffect(()=>{
+        if (isModalOpen) {
+            categoryDialogBox.current.showModal();
+        }
+    }, [isModalOpen])
 
 
     function nextToSubDomain(selectedDomain_id) {
@@ -86,6 +96,12 @@ const CategoryDialog = React.memo(({ isModalOpen, toggleModal }) => {
         setTimeout(() => {
             categoryDialogBox.current.close();
         }, 500);
+    
+    
+
+    if(formState.dataEntered){
+        categoryDialogBox.current.close();
+        setModal(false);
     }
 
     document.onclick = function (e) {
@@ -96,7 +112,7 @@ const CategoryDialog = React.memo(({ isModalOpen, toggleModal }) => {
     }
 
     return (
-        <dialog className="w-[700px] h-max px-6 py-5 rounded shadow-md" ref={categoryDialogBox} id="categoryDialogBox">
+        <dialog className="w-[700px] h-max px-6 py-5 rounded shadow-md fixed m-auto" ref={categoryDialogBox} id="categoryDialogBox">
             <div className="flex items-center justify-between">
                 <h2 className="text-lg text-slate-800 flex w-[450px] h-6 items-center">
                     <FontAwesomeIcon className="mr-2" width={15} icon={faLayerGroup} />
@@ -136,7 +152,7 @@ const CategoryDialog = React.memo(({ isModalOpen, toggleModal }) => {
                             <SubDomainsModal subDomains={subDomains} onSubmit={nextToIssueType} />
                             : ticket.status === "ON_ISSUE_TYPE" ?
                                 <IssueTypeModal onSubmit={ticketSelectionDone} data={issueTypes} />
-                                : ""
+                                : "Great Done!"
                 }
             </main>
         </dialog>
@@ -337,7 +353,6 @@ export const IssueTypeModal = ({ onSubmit, data, }) => {
     }
 
     function handleCheckedIssueType(e) {
-        console.warn(e.target.value)
         setCheckedIssueType(e.target.value);
     }
 
@@ -368,6 +383,7 @@ export const IssueTypeModal = ({ onSubmit, data, }) => {
                                 <div className=' mb-2 relative peer w-full flex h-12 items-center justify-between rounded-md text-slate-700 cursor-pointer' key={"00"}>
                                     <input className='absolute peer' hidden type="radio" name="listRadio" id={"00"} value={"00"} onChange={(e) => { handleCheckedIssueType(e) }} />
                                     <label className='peer-checked:border-campus-green peer-checked:border-opacity-50 border-2 rounded-md flex w-full p-3 pr-10 duration-300 peer-checked:border-2' htmlFor={"00"}>
+
                                         <p className='w-max flex h-full items-center'>
                                             <span className=''>{"Other"}</span>
                                         </p>
