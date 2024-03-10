@@ -1,7 +1,6 @@
 import CryptoJS from "crypto-js";
 import NextAuth from "next-auth/next"
 import Credentials from "next-auth/providers/credentials"
-// import prisma from "../../prisma_client";
 import prisma from "../../prisma_client";
 
 export const authOptions = {
@@ -16,7 +15,6 @@ export const authOptions = {
                 try {
                     let uidtype; //0 if uid is number , else 1 for email
                     let user; // to save user data collected from database
-                    const prisma_client = prisma; // including prisma client
                     if (!req.body.callbackUrl.includes("Student")) {
                         uidtype = 1;
                     } else {
@@ -49,7 +47,7 @@ export const authOptions = {
                     } else {
                         throw new Error("Please provide valid uid!")
                     }
-
+                    
                     const hashpass = CryptoJS.SHA256(credentials.password+process.env.NEXTAUTH_PASSSECRET).toString(CryptoJS.enc.Hex);
                     // console.log(CryptoJS.SHA256("arjlafd"+process.env.NEXTAUTH_PASSSECRET).toString(CryptoJS.enc.Hex) == hashPass);
                     // console.log(hashPass)

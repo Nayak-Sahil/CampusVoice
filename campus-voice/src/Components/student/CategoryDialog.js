@@ -11,17 +11,18 @@ const CategoryDialog = React.memo(({ isModalOpen, setModal, formState }) => {
 
     const queryContext = useContext(QueryContext);
     const { getDomains, domains, getSubDomains, subDomains, issueTypes, getIssueTypes, ticket, setTicket } = queryContext;
+    const categoryDialogBox = useRef(null);
 
     //get initial domains
     useEffect(() => {
-        // getDomains();
         if (isModalOpen) {
+            categoryDialogBox.current.showModal();
             getDomains();
         }
     }, [isModalOpen])
-  
-    useEffect(()=>{
-        if(ticket.status === "TICKET_SELECTION_COMPLETED"){
+
+    useEffect(() => {
+        if (ticket.status === "TICKET_SELECTION_COMPLETED") {
             formState.setCategoryData({
                 ...formState.getCategoryData,
                 selectedCategoryData: ticket,
@@ -30,16 +31,12 @@ const CategoryDialog = React.memo(({ isModalOpen, setModal, formState }) => {
         }
     }, [ticket.status])
 
-    const categoryDialogBox = useRef();
-    useEffect(()=>{
-        if (isModalOpen) {
-            categoryDialogBox.current.showModal();
-        }
-    }, [isModalOpen])
-
+    function closeModal() {
+        categoryDialogBox.current.close();
+        setModal(false);
+    }
 
     function nextToSubDomain(selectedDomain_id) {
-
         //taking name of selected domain
         const selectedDomain =
             selectedDomain_id < 55 ?
@@ -47,37 +44,34 @@ const CategoryDialog = React.memo(({ isModalOpen, setModal, formState }) => {
                 :
                 domains.otherDomains.find((domain) => domain.domain_id === parseInt(selectedDomain_id));
 
-        setTicket({
-            ...ticket,
+        setTicket(prevState => ({
+            ...prevState,
             status: "ON_SUBDOMAIN",
             queryDomain: selectedDomain
-        })
+        }))
 
         //fetch subdomains of selected domain
         getSubDomains(selectedDomain_id);
     }
-    
+
     function nextToIssueType(selectedSubDomain) {
         //taking name of selected subdomain
         selectedSubDomain = subDomains.find((subDomain) => subDomain.subdomain_id === parseInt(selectedSubDomain));
-        
-        if(selectedSubDomain.issues.length === 0){
-            setTicket({
-                ...ticket,
+
+        if (selectedSubDomain.issues.length === 0) {
+            setTicket(prevState => ({
+                ...prevState,
                 status: "TICKET_SELECTION_COMPLETED",
                 querySubDomain: selectedSubDomain,
-                queryIssueType: {issue_id: selectedSubDomain.subdomain_id + "00", issue_type: "NO_ISSUE_TYPE", subdomain_id: selectedSubDomain.subdomain_id, issue_desc: "No issue type found for this sub-domain."}
-            })
-            toggleModal(false);
-            setTimeout(() => {
-                categoryDialogBox.current.close();
-            }, 500);
-        }else{
-            setTicket({
-                ...ticket,
+                queryIssueType: { issue_id: selectedSubDomain.subdomain_id + "00", issue_type: "NO_ISSUE_TYPE", subdomain_id: selectedSubDomain.subdomain_id, issue_desc: "No issue type found for this sub-domain." }
+            }))
+            // closeModal();
+        } else {
+            setTicket(prevState => ({
+                ...prevState,
                 status: "ON_ISSUE_TYPE",
                 querySubDomain: selectedSubDomain
-            })
+            }))
             getIssueTypes(selectedSubDomain.subdomain_id);
         }
 
@@ -87,29 +81,18 @@ const CategoryDialog = React.memo(({ isModalOpen, setModal, formState }) => {
         //get selected issue type
         const selectedIssueType = issueTypes.find((issueType) => issueType.issue_id === selectedIssueId);
 
-        setTicket({
-            ...ticket,
+        setTicket(prevState => ({
+            ...prevState,
             status: "TICKET_SELECTION_COMPLETED",
             queryIssueType: selectedIssueType
-        })
-        toggleModal(false);
-        setTimeout(() => {
-            categoryDialogBox.current.close();
-        }, 500);
-    
-    
+        }))
+        // closeModal();
 
-    if(formState.dataEntered){
-        categoryDialogBox.current.close();
-        setModal(false);
     }
 
-    document.onclick = function (e) {
-        if (e.target.id === "categoryDialogBox") {
-            categoryDialogBox.current.close();
-            toggleModal(false);
-        }
-    }
+    // if (formState.dataEntered) {
+    //     closeModal();
+    // }
 
     return (
         <dialog className="w-[700px] h-max px-6 py-5 rounded shadow-md fixed m-auto" ref={categoryDialogBox} id="categoryDialogBox">
@@ -131,7 +114,7 @@ const CategoryDialog = React.memo(({ isModalOpen, setModal, formState }) => {
                     className="text-red-600 text-base hover:scale-125 ease-linear"
                     onClick={() => {
                         categoryDialogBox.current.close();
-                        toggleModal(false);
+                        setModal(false);
                         setTicket({
                             queryDomain: null,
                             querySubDomain: null,
