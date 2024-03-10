@@ -24,7 +24,7 @@ model UserInfo {
   email String   @unique @db.VarChar(255)
   name  String   @db.VarChar(255) //name of student as well as of Resolver
   image String   @db.VarChar(255)
-  user  UserAuth @relation(fields: [uid], references: [uid], onDelete: Cascade, onUpdate:Cascade)
+  user  UserAuth @relation(fields: [uid], references: [uid], onDelete: Cascade, onUpdate: Cascade)
 
   @@map("user_info")
 }
@@ -57,7 +57,7 @@ model Domain {
 }
 
 model Subdomain {
-  subdom_id      Int    @id @db.Integer
+  subdomain_id      Int    @id @db.Integer
   domain_id      Int    @db.Integer
   subdomain_name String @db.VarChar(255)
   desc           String @db.VarChar(255)
@@ -72,12 +72,12 @@ model Subdomain {
 }
 
 model IssueType {
-  issue_id     Int    @id @db.Integer
+  issue_id     String @id @db.VarChar(6)
   issue_type   String @db.VarChar(255)
   subdomain_id Int    @db.Integer
   created_by   String @db.VarChar(20)
 
-  subdomain    Subdomain      @relation(fields: [subdomain_id], references: [subdom_id], onDelete: Cascade, onUpdate: Cascade)
+  subdomain    Subdomain      @relation(fields: [subdomain_id], references: [subdomain_id], onDelete: Cascade, onUpdate: Cascade)
   creater      Resolver       @relation(fields: [created_by], references: [resolver_id], onDelete: Cascade, onUpdate: Cascade)
   issueMapping IssueMapping[]
   queries      Queries[]
@@ -87,7 +87,7 @@ model IssueType {
 
 model IssueMapping {
   map_id      Int    @id @default(autoincrement()) @db.Integer
-  issue_id    Int    @db.Integer
+  issue_id    String @db.VarChar(6)
   resolver_id String @db.VarChar(20)
   master_id   String @db.VarChar(20)
 
@@ -99,10 +99,10 @@ model IssueMapping {
 }
 
 model Queries {
-  query_id     Int      @id @db.Integer
+  query_id     Int      @id @default(autoincrement()) @db.Integer
   sender_id    String   @db.VarChar(20)
   receiver_id  String   @db.VarChar(20)
-  issue_id     Int      @db.Integer
+  issue_id     String   @db.VarChar(6)
   query_title  String   @db.VarChar(100)
   query_desc   String   @db.VarChar(3000)
   query_type   String   @default("local") @db.VarChar(20)
@@ -128,4 +128,5 @@ model QueryImages {
   @@unique([query_id, image])
   @@map("query_images")
 }
+
 // add into query table: status modiefied datetime
