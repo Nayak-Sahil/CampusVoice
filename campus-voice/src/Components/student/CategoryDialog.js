@@ -15,11 +15,21 @@ const CategoryDialog = React.memo(({ isModalOpen, setModal, formState }) => {
 
     //get initial domains
     useEffect(() => {
-        if (isModalOpen) {
+        console.error(ticket)
+        if (!isModalOpen && ticket.status != "ON_DOMAIN") {
+            setTicket({
+                queryDomain: null,
+                querySubDomain: null,
+                queryIssueType: null,
+                status: "ON_DOMAIN",
+            })
+        }
+
+        if(isModalOpen && ticket.status == "ON_DOMAIN"){
             categoryDialogBox.current.showModal();
             getDomains();
         }
-    }, [isModalOpen])
+    }, [isModalOpen, ticket])
 
     useEffect(() => {
         if (ticket.status === "TICKET_SELECTION_COMPLETED") {
@@ -65,7 +75,7 @@ const CategoryDialog = React.memo(({ isModalOpen, setModal, formState }) => {
                 querySubDomain: selectedSubDomain,
                 queryIssueType: { issue_id: selectedSubDomain.subdomain_id + "00", issue_type: "NO_ISSUE_TYPE", subdomain_id: selectedSubDomain.subdomain_id, issue_desc: "No issue type found for this sub-domain." }
             }))
-            // closeModal();
+            closeModal();
         } else {
             setTicket(prevState => ({
                 ...prevState,
@@ -86,8 +96,7 @@ const CategoryDialog = React.memo(({ isModalOpen, setModal, formState }) => {
             status: "TICKET_SELECTION_COMPLETED",
             queryIssueType: selectedIssueType
         }))
-        // closeModal();
-
+        closeModal();
     }
 
     // if (formState.dataEntered) {
@@ -112,16 +121,7 @@ const CategoryDialog = React.memo(({ isModalOpen, setModal, formState }) => {
                 <button
                     type="button"
                     className="text-red-600 text-base hover:scale-125 ease-linear"
-                    onClick={() => {
-                        categoryDialogBox.current.close();
-                        setModal(false);
-                        setTicket({
-                            queryDomain: null,
-                            querySubDomain: null,
-                            queryIssueType: null,
-                            status: "ON_DOMAIN",
-                        })
-                    }}
+                    onClick={closeModal}
                     id="closeDocModel"
                 >
                     <FontAwesomeIcon icon={faCircleXmark}></FontAwesomeIcon>
