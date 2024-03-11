@@ -10,7 +10,7 @@ export default function QueryPost() {
     const session = useSession();
 
     return (
-        <div className="mx-auto bg-white rounded-md shadow-md my-5 flex w-full h-80 flex-col justify-between p-5 lg:max-w-screen-lg">
+        <div className="mx-auto bg-white rounded-md shadow my-5 flex w-full h-80 flex-col justify-between p-5 lg:max-w-screen-lg">
             <div className='w-full h-18 pb-3 border-b-slate-200 border-b-[1px] flex items-center justify-between'>
                 <div className='w-max h-full border-red-100 flex items-center'>
                     <Image
@@ -46,23 +46,25 @@ export default function QueryPost() {
             </div>
             <div className='w-full h-12 pt-2 pr-2 flex items-center justify-between'>
                 <div className='w-full flex items-center'>
-                    <button class="flex items-center justify-center gap-1 rounded-full border border-emerald-500 px-3 py-1 font-medium text-emerald-500 focus:outline-none focus:ring hover:bg-emerald-100">
-                        <FontAwesomeIcon width={20} className='-rotate-45' icon={faHandshake} />
-                        <span>agree</span>
+                    <button class="h-10 flex items-center justify-center gap-2 rounded-full border border-emerald-500 px-2.5 py-1 font-medium text-emerald-500 focus:outline-none focus:ring hover:bg-emerald-100 group hover:border-white hover:shadow">
+                        {/* <FontAwesomeIcon width={20} className='-rotate-45' icon={faHandshake} /> */}
+                        <span className='block group-hover:scale-125 -mb-[3px]'>😀</span>
+                        {/* <span className='hidden'>agree</span> */}
                     </button>
-                    <button class="ml-5 flex items-center justify-center gap-1 rounded-full border border-red-500 px-3 py-1 font-medium text-red-500 focus:outline-none focus:ring hover:bg-red-100">
-                        <FontAwesomeIcon width={20} icon={faThumbsDown} />
-                        <span>disagree</span>
+                    <button class="h-10 ml-5 flex items-center justify-center gap-2 rounded-full border border-red-500 px-2.5 py-1 font-medium text-red-500 focus:outline-none focus:ring hover:bg-red-100 hover:border-white hover:shadow group">
+                        {/* <FontAwesomeIcon width={20} icon={faThumbsDown} /> */}
+                        <span className='block group-hover:scale-125 -mb-[3px]'>👎</span>
+                        {/* <span className="hidden">disagree</span> */}
                     </button>
-                    <button class="ml-5 flex items-center justify-center gap-1 rounded-full border border-gray-500 px-3 py-1 font-medium text-gray-500 focus:outline-none focus:ring hover:bg-gray-100">
-                        <FontAwesomeIcon width={20} icon={faShareFromSquare} />
-                        <span>share</span>
+                    <button class="h-10 ml-5 flex items-center justify-center gap-2 rounded-full border border-gray-500 px-2.5 py-1 font-medium text-gray-500 focus:outline-none focus:ring hover:bg-gray-100 hover:border-white hover:shadow group">
+                        <FontAwesomeIcon className='block group-hover:scale-110' width={20} icon={faShareFromSquare} />
+                        {/* <span className="hidden">share</span> */}
                     </button>
                 </div>
                 <div className='w-full flex items-center justify-end'>
-                    <button class="flex items-center justify-center gap-1 rounded-full border border-slate-900 px-3 py-1 font-medium text-slate-900 focus:outline-none focus:ring hover:bg-slate-100">
-                        <FontAwesomeIcon width={20} icon={faCommentDots} />
-                        <span>comments</span>
+                    <button class="h-10 flex items-center justify-center gap-2 rounded-full border border-slate-900 px-2.5 py-1 font-medium text-slate-900 focus:outline-none focus:ring ease-linear hover:bg-slate-100 hover:border-white hover:shadow group">
+                        <span className='block group-hover:scale-125 -mb-[3px]'>💬</span>
+                        {/* <span className='hidden group-hover:block'>comments</span> */}
                     </button>
                     <p className='ml-4 text-gray-500 text-sm'>5 comments</p>
                 </div>
