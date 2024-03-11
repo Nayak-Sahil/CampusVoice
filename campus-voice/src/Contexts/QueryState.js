@@ -41,7 +41,7 @@ export const QueryState = (props) => {
 
     let data = await res.json();
     if (!data || data.error) {
-      return error;
+      return data.error;
     }
 
     //get department domain seperate from data
