@@ -9,3 +9,8 @@ for queryResolver login
 for student
 01623001 - arjav1234
 01623002 - random1234
+
+
+# Tips to get rid from error
+1. first do: `npm install`
+2. in database, check date format year-month-date 

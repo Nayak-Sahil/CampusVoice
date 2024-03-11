@@ -1,8 +1,22 @@
--- DropForeignKey
-ALTER TABLE "user_info" DROP CONSTRAINT "user_info_uid_fkey";
+-- CreateTable
+CREATE TABLE "user_auth" (
+    "uid" VARCHAR(20) NOT NULL,
+    "password" VARCHAR(255) NOT NULL,
+    "modifyAt" DATE NOT NULL,
+    "createdAt" DATE NOT NULL DEFAULT CURRENT_TIMESTAMP,
 
--- AlterTable
-ALTER TABLE "user_auth" ALTER COLUMN "createdAt" SET DEFAULT CURRENT_TIMESTAMP;
+    CONSTRAINT "user_auth_pkey" PRIMARY KEY ("uid")
+);
+
+-- CreateTable
+CREATE TABLE "user_info" (
+    "uid" VARCHAR(20) NOT NULL,
+    "email" VARCHAR(255) NOT NULL,
+    "name" VARCHAR(255) NOT NULL,
+    "image" VARCHAR(255) NOT NULL,
+
+    CONSTRAINT "user_info_pkey" PRIMARY KEY ("uid")
+);
 
 -- CreateTable
 CREATE TABLE "resolver" (
@@ -24,18 +38,18 @@ CREATE TABLE "domain" (
 
 -- CreateTable
 CREATE TABLE "subdomain" (
-    "subdom_id" INTEGER NOT NULL,
+    "subdomain_id" INTEGER NOT NULL,
     "domain_id" INTEGER NOT NULL,
     "subdomain_name" VARCHAR(255) NOT NULL,
     "desc" VARCHAR(255) NOT NULL,
     "master_id" VARCHAR(20) NOT NULL,
 
-    CONSTRAINT "subdomain_pkey" PRIMARY KEY ("subdom_id")
+    CONSTRAINT "subdomain_pkey" PRIMARY KEY ("subdomain_id")
 );
 
 -- CreateTable
 CREATE TABLE "issue_type" (
-    "issue_id" INTEGER NOT NULL,
+    "issue_id" VARCHAR(6) NOT NULL,
     "issue_type" VARCHAR(255) NOT NULL,
     "subdomain_id" INTEGER NOT NULL,
     "created_by" VARCHAR(20) NOT NULL,
@@ -46,7 +60,7 @@ CREATE TABLE "issue_type" (
 -- CreateTable
 CREATE TABLE "issue_mapping" (
     "map_id" SERIAL NOT NULL,
-    "issue_id" INTEGER NOT NULL,
+    "issue_id" VARCHAR(6) NOT NULL,
     "resolver_id" VARCHAR(20) NOT NULL,
     "master_id" VARCHAR(20) NOT NULL,
 
@@ -55,10 +69,10 @@ CREATE TABLE "issue_mapping" (
 
 -- CreateTable
 CREATE TABLE "queries" (
-    "query_id" INTEGER NOT NULL,
+    "query_id" SERIAL NOT NULL,
     "sender_id" VARCHAR(20) NOT NULL,
     "receiver_id" VARCHAR(20) NOT NULL,
-    "issue_id" INTEGER NOT NULL,
+    "issue_id" VARCHAR(6) NOT NULL,
     "query_title" VARCHAR(100) NOT NULL,
     "query_desc" VARCHAR(3000) NOT NULL,
     "query_type" VARCHAR(20) NOT NULL DEFAULT 'local',
@@ -74,6 +88,9 @@ CREATE TABLE "query_images" (
     "query_id" INTEGER NOT NULL,
     "image" VARCHAR(255) NOT NULL
 );
+
+-- CreateIndex
+CREATE UNIQUE INDEX "user_info_email_key" ON "user_info"("email");
 
 -- CreateIndex
 CREATE UNIQUE INDEX "query_images_query_id_image_key" ON "query_images"("query_id", "image");
@@ -94,7 +111,7 @@ ALTER TABLE "subdomain" ADD CONSTRAINT "subdomain_master_id_fkey" FOREIGN KEY ("
 ALTER TABLE "subdomain" ADD CONSTRAINT "subdomain_domain_id_fkey" FOREIGN KEY ("domain_id") REFERENCES "domain"("domain_id") ON DELETE CASCADE ON UPDATE CASCADE;
 
 -- AddForeignKey
-ALTER TABLE "issue_type" ADD CONSTRAINT "issue_type_subdomain_id_fkey" FOREIGN KEY ("subdomain_id") REFERENCES "subdomain"("subdom_id") ON DELETE CASCADE ON UPDATE CASCADE;
+ALTER TABLE "issue_type" ADD CONSTRAINT "issue_type_subdomain_id_fkey" FOREIGN KEY ("subdomain_id") REFERENCES "subdomain"("subdomain_id") ON DELETE CASCADE ON UPDATE CASCADE;
 
 -- AddForeignKey
 ALTER TABLE "issue_type" ADD CONSTRAINT "issue_type_created_by_fkey" FOREIGN KEY ("created_by") REFERENCES "resolver"("resolver_id") ON DELETE CASCADE ON UPDATE CASCADE;
