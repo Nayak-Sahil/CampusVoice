@@ -13,19 +13,40 @@ export default function SendQuery() {
     const [isLoading, setIsLoading] = useState(false);
 
     const router = useRouter();
-    const saveQueryData = (e) => {
+    const saveQueryData = async(e) => {
         setIsLoading(true);
         e.preventDefault();
-        if (localStorage.getItem('queries')) {
-            const data = JSON.parse(localStorage.getItem('queries'));
-            data.unshift(contextQuery.queryData);
-            localStorage.setItem('queries', JSON.stringify(data));
-        } else {
-            const data = [];
-            data.unshift(contextQuery.queryData);
-            localStorage.setItem('queries', JSON.stringify(data));
+        
+        //insert query data to database
+        const res = await contextQuery.insertQueryData();
+        if (!res || res.error) {
+            setIsLoading(false);
+            return;
         }
+
+        //set form state to write
         contextQuery.queryData.FormState = "WRITE";
+
+        //set query data to default
+        contextQuery.setQueryData({
+            QueryCategory: null,
+            QueryTitle: "",
+            QueryDetails: "",
+            PostVisibility: "GLOBAL",
+            QueryResolver: null,
+            UserIdentity: null,
+            FormState: "WRITE"
+        });
+
+        //set ticket to default
+        contextQuery.setTicket({
+            queryDomain: null,
+            querySubDomain: null,
+            queryIssueType: null,
+            status: "ON_DOMAIN"
+        });
+        
+        //redirect to dashboard
         setTimeout(() => {
             router.push('/Dashboard/Student')
             setIsLoading(false);
@@ -45,11 +66,11 @@ export default function SendQuery() {
                 </div>
                 <div className='border-2 py-2 px-4 rounded-xl'>
                     <p className='text-campus-green'>Your Query Category:</p>
-                    <p className='mt-1 text-sm'><FontAwesomeIcon width={15} icon={faLayerGroup}></FontAwesomeIcon> <span className='ml-1'>{QueryCategory.queryDomain} / {QueryCategory.querySubDomain} / {QueryCategory.queryIssueType}</span></p>
+                    <p className='mt-1 text-sm'><FontAwesomeIcon width={15} icon={faLayerGroup}></FontAwesomeIcon> <span className='ml-1'>{QueryCategory.queryDomain.domain_name} / {QueryCategory.querySubDomain.subdomain_name} / {QueryCategory.queryIssueType.issue_type}</span></p>
                 </div>
                 <div className='border-2 py-2 px-4 rounded-xl'>
                     <p className='text-campus-green'>Query Resolver:</p>
-                    <p className='mt-1 text-sm'><FontAwesomeIcon width={15} icon={faPaperPlane}></FontAwesomeIcon> <span className='ml-1'>{QueryResolver}</span></p>
+                    <p className='mt-1 text-sm'><FontAwesomeIcon width={15} icon={faPaperPlane}></FontAwesomeIcon> <span className='ml-1'>{QueryResolver.resolver.resolver_role}</span></p>
                 </div>
                 <div className='border-2 py-2 px-4 rounded-xl'>
                     <p className='text-campus-green'>Your Query Post Mode:</p>

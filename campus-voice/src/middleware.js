@@ -19,6 +19,7 @@ export default withAuth(
     if(req.nextauth.token.role === "resolver" && req.nextUrl.pathname.startsWith('/Dashboard/Student' || '/Student')){
       return NextResponse.rewrite(new URL('/Unauthorized',req.url));
     }
+    
 
     // API requests
     if(req.nextUrl.pathname.startsWith('/api')){
@@ -49,5 +50,5 @@ export default withAuth(
 
 
 export const config = { 
-    matcher: ["/Dashboard/:path*","/QueryResolver/:path*","/Student/:path*", "/api/:path*"] 
+    matcher: ["/Dashboard/:path*","/QueryResolver/:path*","/Student/:path*"] 
 }

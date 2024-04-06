@@ -1,6 +1,8 @@
 "use client"
-import React, { useState } from "react";
+import React, { use, useState } from "react";
 import QueryContext from "./QueryContext";
+import { useSession } from "next-auth/react";
+import { cloudinaryUpload } from "@/lib/cloudinaryUpload";
 
 export const QueryState = (props) => {
   /**
@@ -13,6 +15,8 @@ export const QueryState = (props) => {
   const [domains, setDomains] = useState({});
   const [subDomains, setSubDomains] = useState(null);
   const [issueTypes, setIssueTypes] = useState(null);
+  const [resolvers, setResolvers] = useState([]);
+  const session = useSession();
 
   //while generating queryr
   const queryTicket = {
@@ -32,7 +36,7 @@ export const QueryState = (props) => {
     if (domains.departmentDomain && domains.otherDomains) return;
 
     //fetch domains from the server
-    const res = await fetch("/api/category-details?category=domains", {
+    const res = await fetch("/api/query/category-details?category=domains", {
       method: "GET",
       headers: {
         "Content-Type": "application/json",
@@ -58,7 +62,7 @@ export const QueryState = (props) => {
   const getSubDomains = async (domain_id) => {
     console.log(subDomains);
 
-    const res = await fetch(`/api/category-details?category=subdomains&domain_id=${domain_id}`, {
+    const res = await fetch(`/api/query/category-details?category=subdomains&domain_id=${domain_id}`, {
       method: "GET",
       headers: {
         "Content-Type": "application/json",
@@ -67,7 +71,7 @@ export const QueryState = (props) => {
 
     let data = await res.json();
     if (!data || data.error) {
-      return error;
+      return data.error;
     }
     console.log(data);
     setSubDomains(data);
@@ -80,8 +84,52 @@ export const QueryState = (props) => {
     setIssueTypes(issueTypes);
   }
 
+
+  //insert query into the database
+  const insertQueryData = async () => {
+    //if session is not present throw error
+    if(!session) return;
+
+    //upload images to cloudinary
+    const images = [];
+    if (queryData.QueryDataImages) {
+      for (let i = 0; i < queryData.QueryDataImages.length; i++) {
+        const res = await cloudinaryUpload(queryData.QueryDataImages[i], "campus_voice/queries");
+        if (!res || res.error) {
+          return res.error;
+        }
+        images.push(res.url);
+      }
+    }
+
+    //if query data is not present throw error
+    if (!queryData.QueryCategory || !queryData.QueryResolver) return "Query data not present";
+
+    const res = await fetch("/api/query", {
+      method: "POST",
+      headers: {
+        "Content-Type": "application/json",
+      },
+      body: JSON.stringify({
+        sender_id: session.data.user.uid,
+        receiver_id: queryData.QueryResolver.resolver_id,
+        issue_id: queryData.QueryCategory.queryIssueType.issue_id,
+        query_title: queryData.QueryTitle,
+        query_desc: queryData.QueryDetails,
+        query_type: queryData.PostVisibility,
+        identity: queryData.UserIdentity.IsMasked,
+        images
+      })
+    })
+
+    let data = await res.json();
+    if (!data || data.error) {
+      return data.error;
+    }
+  }
+
   return (
-    <QueryContext.Provider value={{ queryData, setQueryData, getDomains, domains, getSubDomains, subDomains,issueTypes,  getIssueTypes, ticket, setTicket }}>
+    <QueryContext.Provider value={{ queryData, setQueryData, getDomains, domains, getSubDomains, subDomains,issueTypes,  getIssueTypes, ticket, setTicket , resolvers , setResolvers,insertQueryData}}>
       {props.children}
     </QueryContext.Provider>
   );

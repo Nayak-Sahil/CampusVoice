@@ -280,7 +280,10 @@ export default function WriteQuery() {
           </div>
           <div className="w-full h-[30px] items-center mt-3 mb-1 flex justify-between sm:col-span-3">
             <p className="text-campus-green">You can select only 5 document.</p>
-            <button className="flex w-max items-center justify-center rounded-lg bg-campus-green py-2 px-5 text-center text-white">
+            <button className="flex w-max items-center justify-center rounded-lg bg-campus-green py-2 px-5 text-center text-white" onClick={()=>{
+              //set selectedImages
+              attachDocModel.current.close();
+            }}>
               <FontAwesomeIcon icon={faCloudArrowUp}></FontAwesomeIcon>
               <span className="mt-1 ml-2">Upload</span>
             </button>

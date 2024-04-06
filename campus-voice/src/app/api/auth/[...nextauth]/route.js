@@ -86,27 +86,30 @@ export const authOptions = {
     callbacks: {
         async session({ session, user, token }) {
             if (token) {
-                console.log(token)
-                session.user.uid = token.uid;
-                session.user.name = token.name;
-                session.user.email = token.email;
-                session.user.role = token.role;
                 return {
                     ...session,
                     user: {
                         ...session.user,
                         uid: token.uid,
+                        role: token.role,
+                        name: token.name,
+                        email: token.email,
+                        image: token.image
                     }
-                };
+                }
             }
             return session;
         },
         async jwt({ user , token }) {
             if (user) {
-                token.uid = user.uid;
-                token.role = user.role;
-                token.name = user.name;
-                token.email = user.email;
+                return {
+                    ...token,
+                    uid: user.uid,
+                    role: user.role,
+                    name: user.name,
+                    email: user.email,
+                    image: user.image
+                }
             }
             return token;
         },
@@ -115,7 +118,8 @@ export const authOptions = {
                 user.uid = user.uid;
                 user.email = user.email
                 user.image = user.image
-                user.name = user.name
+                user.name = user.name,
+                user.role = user.role
                 return true;
             }
             return false;
