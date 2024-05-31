@@ -21,7 +21,7 @@ export default function QueryPost() {
                         unoptimized={true}
                         class="inline-block h-4 w-4 sm:h-6 sm:w-6 rounded-full"
                     />
-                    <h2 className="text-slate-900 text-sm mx-2 mt-1">Sahil Nayak</h2>
+                    <h2 className="text-slate-900 text-sm mx-2 mt-1">HN02323SNZ</h2>
                     <p className='text-gray-600 text-xs mt-1'> 5hr ago.</p>
                     <p className="ml-2 rounded-full bg-yellow-200 px-3 py-0.5 font-medium text-yellow-700 max-w-lg text-xs pt-1 mt-1">Sent to resolver</p>
                 </div>
@@ -37,8 +37,10 @@ export default function QueryPost() {
                 </div>
             </div>
             <div className='w-full h-36 mt-3 flex flex-col justify-start items-start'>
-                <h2 className="text-slate-900 text-xl font-bold lg:text-xl mb-2">Query Title</h2>
-                <p className="text-slate-700 relative line-clamp-4 max-w-full">Lorem ipsum dolor sit amet consectetur adipisicing elit. Molestias architecto veniam excepturi corrupti debitis perspiciatis autem, voluptates dignissimos nemo rerum similique earum sint sapiente cumque laboriosam ipsam, eligendi odio ut? Praesentium, vel. Quisquam expedita culpa animi suscipit esse architecto et accusantium porro temporibus, quo a obcaecati iste perspiciatis possimus? Doloribus a earum aut commodi impedit, asperiores fugiat labore? A mollitia fugiat veritatis nihil eum officia placeat, in atque. Aut impedit mollitia, obcaecati reiciendis, ea ad architecto ipsum facilis totam placeat quia deleniti perferendis aperiam! Obcaecati, maxime accusantium nostrum vitae officiis, esse id minima ipsa, consequatur nulla illo molestiae aperiam aliquid.
+                <h2 className="text-slate-900 text-xl font-bold lg:text-xl mb-2">Clarification Needed on Assignment Grading Criteria</h2>
+                <p className="text-slate-700 relative line-clamp-4 max-w-full">I am a student in your Computer Science 101 class, and I have some questions regarding the grading criteria for our recent assignment. I noticed that I lost several points, but I am unsure about the specific reasons for the deductions. Could you please provide me with more detailed feedback or a rubric outlining the criteria used for grading? Understanding this will help me improve my future assignments.
+
+                Thank you for your time and assistance.
                     <p className='text-slate-700 cursor-pointer absolute right-0 bottom-0 block pr-4 pl-1 bg-white'>...
                         <span className='text-campus-green ml-1'>View More <FontAwesomeIcon width={12} icon={faUpRightFromSquare} /></span>
                     </p>
