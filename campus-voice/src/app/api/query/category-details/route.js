@@ -1,8 +1,8 @@
 import { getServerSession, unstable_getServerSession } from "next-auth";
 import { NextRequest, NextResponse } from "next/server";
-import { authOptions } from "../auth/[...nextauth]/route";
+import { authOptions } from "../../auth/[...nextauth]/route";
 import { cookies, headers } from "next/headers";
-import prisma from "../prisma_client";
+import prisma from "../../prisma_client";
 
 
 export const GET = async(req,res) =>{

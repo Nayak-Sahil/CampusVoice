@@ -16,7 +16,9 @@ const InputForm = () => {
     console.log(e.target.uid.value, e.target.password.value)
     setLoading(true);
     const passField = document.querySelector("[type = password]");
-        if(pathname == '/Account/Student' && e.target.uid.value.startsWith('1') || (pathname == '/Account/QueryResolver' && e.target.uid.value.startsWith('0') && !e.target.uid.value.toString().contains('@'))){
+        if((pathname === "/Account/Student" && e.target.uid.value.startsWith('0')) || (pathname === "/Account/QueryResolver" && (e.target.uid.value.startsWith('1') || e.target.uid.value.toString().includes("@")))){
+          
+        }else{
           setTimeout(() => {
             setAlertMsg("");
           }, 3000);
@@ -48,7 +50,6 @@ const InputForm = () => {
         }else{
             router.push('/Dashboard/Student');
         }
-        setLoading(false);
       }
     }, 500);
   }

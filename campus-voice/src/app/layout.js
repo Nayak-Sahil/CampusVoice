@@ -19,11 +19,9 @@ export default function RootLayout({ children }) {
   return (
     <html lang="en">
       <body className={league_spartan.className}>
-        <QueryState>
           <NavListState>
             {children}
           </NavListState>
-        </QueryState>
       </body>
     </html>
   )
