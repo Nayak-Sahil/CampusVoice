@@ -69,8 +69,11 @@
     border: 1px solid var(--brdr);
     position: relative;
     cursor: pointer;
-    color: var(--primary);
     box-shadow: 2px 2px 2px var(--brdr);
+}
+.auth_btn a{
+    color: var(--primary);
+    text-decoration: none;
     display: flex;
     align-items: center;
     justify-content: center;
