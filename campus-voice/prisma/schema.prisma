@@ -57,7 +57,7 @@ model Domain {
 }
 
 model Subdomain {
-  subdomain_id      Int    @id @db.Integer
+  subdomain_id   Int    @id @db.Integer
   domain_id      Int    @db.Integer
   subdomain_name String @db.VarChar(255)
   desc           String @db.VarChar(255)
@@ -110,11 +110,10 @@ model Queries {
   query_status String   @default("sent") @db.VarChar(20)
   createdAt    DateTime @default(now()) @db.Date
 
-  sender   UserAuth  @relation(fields: [sender_id], references: [uid], onDelete: Cascade, onUpdate: Cascade)
-  receiver Resolver  @relation(fields: [receiver_id], references: [resolver_id], onDelete: Cascade, onUpdate: Cascade)
-  issue    IssueType @relation(fields: [issue_id], references: [issue_id], onDelete: Cascade, onUpdate: Cascade)
-
-  queryImages QueryImages[]
+  sender      UserAuth      @relation(fields: [sender_id], references: [uid], onDelete: Cascade, onUpdate: Cascade)
+  receiver    Resolver      @relation(fields: [receiver_id], references: [resolver_id], onDelete: Cascade, onUpdate: Cascade)
+  issue       IssueType     @relation(fields: [issue_id], references: [issue_id], onDelete: Cascade, onUpdate: Cascade)
+  QueryImages QueryImages[]
 
   @@map("queries")
 }

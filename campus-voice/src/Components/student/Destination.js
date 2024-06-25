@@ -85,7 +85,7 @@ export default function Destination() {
                                                 <p className='text-slate-800 my-2'>
                                                     Your query will be resolved by
                                                 </p>
-                                                <div class="flex w-full justify-center">
+                                                <div className="flex w-full justify-center">
                                                     <div className='border w-full text-center py-1 rounded-md'>
                                                         {
                                                             contextQuery.resolvers[0].resolver.user.userInfo.name
@@ -112,21 +112,21 @@ export default function Destination() {
                                                 <p className='text-slate-800 my-2'>
                                                     You can select any one!
                                                 </p>
-                                                <div class="flex w-full justify-center">
+                                                <div className="flex w-full justify-center">
                                                     <select
                                                         className="text-base w-full rounded-lg border px-2 py-3 shadow-sm outline-none focus:ring focus:ring-campus-green focus:ring-opacity-30 pr-5"
                                                         name="QueryCategory"
                                                         id="QueryCategory"
                                                         value={selectedResolver?.resolver_id}
-                                                        onChange={(e) => setSelectedResolver( contextQuery.resolvers.find((resolver) => resolver.resolver_id === e.target.value))}
-                                                    >   
-                                                    {
-                                                        contextQuery.resolvers.map((resolver) => {
-                                                            return (
-                                                                <option key={resolver.resolver_id} value={resolver.resolver_id}>{resolver.resolver.user.userInfo.name}</option>
-                                                            )
-                                                        })
-                                                    }
+                                                        onChange={(e) => setSelectedResolver(contextQuery.resolvers.find((resolver) => resolver.resolver_id === e.target.value))}
+                                                    >
+                                                        {
+                                                            contextQuery.resolvers.map((resolver) => {
+                                                                return (
+                                                                    <option key={resolver.resolver_id} value={resolver.resolver_id}>{resolver.resolver.user.userInfo.name}</option>
+                                                                )
+                                                            })
+                                                        }
                                                     </select>
                                                 </div>
                                                 <p className="text-left text-sm leading-6 text-gray-500 hover:text-gray-600 my-5"><span className='text-slate-800'>Work :</span> Lorem ipsum dolor sit amet consectetur, adipisicing elit. Architecto, placeat!</p>
@@ -135,19 +135,19 @@ export default function Destination() {
                                                         <span>Category</span>
                                                         <span className="ml-auto"><span className="rounded-full bg-green-200 py-1 px-2 text-xs font-medium text-green-700">
                                                             {contextQuery.queryData.QueryCategory.queryDomain.domain_name + '/'
-                                                                + contextQuery.queryData.QueryCategory.querySubDomain.subdomain_name  +
+                                                                + contextQuery.queryData.QueryCategory.querySubDomain.subdomain_name +
                                                                 (contextQuery.queryData.QueryCategory.queryIssueType.issue_type ?
-                                                                 "/" + contextQuery.queryData.QueryCategory.queryIssueType.issue_type : "")
+                                                                    "/" + contextQuery.queryData.QueryCategory.queryIssueType.issue_type : "")
                                                             }
-                                                            
+
                                                         </span></span>
                                                     </li>
                                                     <li className="flex items-center py-3 text-sm">
                                                         <span>Joined On</span>
                                                         <span className="ml-auto">
-                                                        {
-                                                            new Date(contextQuery.resolvers[0].resolver.user.createdAt).toUTCString().split(' ').slice(0, 4).join(' ').split(',')[1]
-                                                        }
+                                                            {
+                                                                new Date(contextQuery.resolvers[0].resolver.user.createdAt).toUTCString().split(' ').slice(0, 4).join(' ').split(',')[1]
+                                                            }
                                                         </span>
                                                     </li>
                                                 </ul>

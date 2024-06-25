@@ -1,9 +1,63 @@
+"use client"
+import QueryContext from '@/Contexts/QueryContext'
 import { faArrowLeft, faArrowRight } from '@fortawesome/free-solid-svg-icons'
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
 import Link from 'next/link'
-import React from 'react'
+import React, { useCallback, useContext, useEffect, useState } from 'react'
+import { useMemo } from 'react'
 
 export default function TrackQueryList() {
+    const { fetchQueries } = useContext(QueryContext);
+    const [queries, setQueries] = useState([]);
+
+    useEffect(() => {
+        const getQueries = async () => {
+            const res = await fetchQueries(8, 0);
+
+            if (res.status === 200) {
+                const data = await res.json();
+                setQueries(data.queries);
+            }
+        }
+
+        getQueries();
+    }, [])
+
+
+    //convert date to 07 February, 2022 format
+    const formateDate = (currDate) => {
+        const date = new Date(currDate);
+
+
+        return date.getDate() + " " + date.toLocaleString('default', { month: 'long' }) + ", " + date.getFullYear()
+    }
+
+    const getStatus = (state) => {
+        switch (state) {
+            case "sent":
+                return "Sent to resolver"
+            case "pending":
+                return "Pending"
+            case "approved":
+                return "approved"
+            default:
+                return "Unknown state"
+        }
+    }
+
+    const getStyle = (state) => {
+        switch (state) {
+            case "sent":
+                return "text-yellow-700 bg-yellow-200"
+            case "pending":
+                return "text-indigo-600 bg-indigo-200"
+            case "approved":
+                return "text-green-600 bg-green-200"
+            default:
+                return "text-yellow-700 bg-yellow-200"
+        }
+    }
+
     return (
         <>
             <div className="w-[80vw] mx-auto h-[70vh] my-4">
@@ -42,6 +96,44 @@ export default function TrackQueryList() {
                         </div>
 
                         <div className="lg:border-gray-300">
+                            {
+                                queries.length === 0 ?
+                                    <h2>
+                                        No queries found.
+                                    </h2>
+                                    :
+                                    queries.map((query) => (
+                                        <Link href={`TrackQuery/${query.issue_id}`} className="flex justify-between w-full hover:bg-gray-100 cursor-pointer">
+                                            <div className="w-[40%] whitespace-no-wrap py-4 text-base text-gray-900 sm:px-6">
+                                                {query.query_title}
+                                                <div className="mt-1 lg:hidden">
+                                                    <p className="font-normal text-gray-500">{formateDate(query.createdAt)}</p>
+                                                </div>
+                                            </div>
+
+                                            <div className="w-[20%] text-center whitespace-no-wrap hidden py-4 text-sm font-normal text-gray-500 sm:px-6 lg:flex">{formateDate(query.createdAt)}</div>
+
+                                            <div className="w-[15%] text-center whitespace-no-wrap py-4 px-6 text-sm text-gray-600 lg:text-left">
+                                                <span className='pl-10'>0</span>
+                                                <span className={`rounded-full 
+                                                ${getStyle(query.query_status)}
+                                                px-2 py-0.5 text-xs font-medium lg:hidden`}>{
+                                                        getStatus(query.query_status)
+                                                    }</span>
+                                            </div>
+
+                                            <div className="w-[15%] whitespace-no-wrap hidden py-4 text-sm font-normal text-gray-500 sm:px-6 lg:flex lg:items-center">
+                                                <span className={`rounded-full 
+                                                ${getStyle(query.query_status)}
+                                                px-2 py-0.5 text-xs font-medium`}>{
+                                                        getStatus(query.query_status)
+                                                    }</span>
+                                            </div>
+                                        </Link>
+                                    ))
+                            }
+
+
                             <Link href="TrackQuery/5023232" className="flex justify-between w-full hover:bg-gray-100 cursor-pointer">
                                 <div className="w-[40%] whitespace-no-wrap py-4 text-base text-gray-900 sm:px-6">
                                     Queury Regarding Hostel Admission - Feb 2022
@@ -122,23 +214,23 @@ export default function TrackQueryList() {
                     </section>
                 </div>
             </div>
-            <nav aria-label="Page Navigation" class="w-[80vw] mx-auto my-2 flex justify-end space-x-2 py-2 px-1">
-                <a class="w-14 flex items-center space-x-1 font-medium text-gray-400" aria-label="Previous Page" tabindex="-1">
+            <nav aria-label="Page Navigation" className="w-[80vw] mx-auto my-2 flex justify-end space-x-2 py-2 px-1">
+                <a className="w-14 flex items-center space-x-1 font-medium text-gray-400" aria-label="Previous Page" tabIndex="-1">
                     <FontAwesomeIcon className='mb-1 mr-1' icon={faArrowLeft} />
                     <span>Prev</span>
                 </a>
-                <ul class="flex">
-                    <li><a href="#" class="rounded-md border-2 border-campus-green px-2 text-base font-medium text-campus-green sm:px-3 pt-1">1</a></li>
-                    <li><a href="#" class="px-2 text-base font-medium sm:px-3 hover:text-campus-green">2</a></li>
-                    <li><span class="text-gray-400" aria-hidden="true">...</span><span class="sr-only">Skipping Pages</span></li>
-                    <li><a href="#" class="px-2 text-base font-medium sm:px-3 hover:text-campus-green">22</a></li>
-                    <li><a href="#" class="px-2 text-base font-medium sm:px-3 hover:text-campus-green">23</a></li>
+                <ul className="flex">
+                    <li><a href="#" className="rounded-md border-2 border-campus-green px-2 text-base font-medium text-campus-green sm:px-3 pt-1">1</a></li>
+                    <li><a href="#" className="px-2 text-base font-medium sm:px-3 hover:text-campus-green">2</a></li>
+                    <li><span className="text-gray-400" aria-hidden="true">...</span><span className="sr-only">Skipping Pages</span></li>
+                    <li><a href="#" className="px-2 text-base font-medium sm:px-3 hover:text-campus-green">22</a></li>
+                    <li><a href="#" className="px-2 text-base font-medium sm:px-3 hover:text-campus-green">23</a></li>
                 </ul>
-                <a class="w-14 flex items-center space-x-1 font-medium hover:text-campus-green" href="#" aria-label="Next Page">
+                <a className="w-14 flex items-center space-x-1 font-medium hover:text-campus-green" href="#" aria-label="Next Page">
                     <span className='mr-1'>Next</span>
                     <FontAwesomeIcon className='mb-1' icon={faArrowRight} />
                 </a>
-            </nav>
+            </nav >
         </>
     )
 }

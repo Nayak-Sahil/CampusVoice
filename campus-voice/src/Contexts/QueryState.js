@@ -88,7 +88,7 @@ export const QueryState = (props) => {
   //insert query into the database
   const insertQueryData = async () => {
     //if session is not present throw error
-    if(!session) return;
+    if (!session) return;
 
     //upload images to cloudinary
     const images = [];
@@ -105,7 +105,7 @@ export const QueryState = (props) => {
     //if query data is not present throw error
     if (!queryData.QueryCategory || !queryData.QueryResolver) return "Query data not present";
 
-    const res = await fetch("/api/query", {
+    const res = await fetch(`${process.env.NEXT_PUBLIC_BASE_URL}/api/query`, {
       method: "POST",
       headers: {
         "Content-Type": "application/json",
@@ -126,10 +126,23 @@ export const QueryState = (props) => {
     if (!data || data.error) {
       return data.error;
     }
+    return data;
+  }
+
+
+  const fetchQueries = async (numberOfQueries, lastQueryId) => {
+    const res = await fetch(`${process.env.NEXT_PUBLIC_BASE_URL}/api/query?noOfQueries=${numberOfQueries}&lastQueryId=${lastQueryId}`, {
+      method: "GET",
+      headers: {
+        "Content-Type": "application/json",
+      }
+    })
+
+    return res;
   }
 
   return (
-    <QueryContext.Provider value={{ queryData, setQueryData, getDomains, domains, getSubDomains, subDomains,issueTypes,  getIssueTypes, ticket, setTicket , resolvers , setResolvers,insertQueryData}}>
+    <QueryContext.Provider value={{ queryData, setQueryData, getDomains, domains, getSubDomains, subDomains, issueTypes, getIssueTypes, ticket, setTicket, resolvers, setResolvers, insertQueryData, fetchQueries }}>
       {props.children}
     </QueryContext.Provider>
   );

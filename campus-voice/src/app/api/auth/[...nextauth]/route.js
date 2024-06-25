@@ -45,8 +45,8 @@ export const authOptions = {
                     } else {
                         throw new Error("Please provide valid uid!")
                     }
-                    
-                    const hashpass = CryptoJS.SHA256(credentials.password+process.env.NEXTAUTH_PASSSECRET).toString(CryptoJS.enc.Hex);
+
+                    const hashpass = CryptoJS.SHA256(credentials.password + process.env.NEXTAUTH_PASSSECRET).toString(CryptoJS.enc.Hex);
                     // console.log(CryptoJS.SHA256("arjlafd"+process.env.NEXTAUTH_PASSSECRET).toString(CryptoJS.enc.Hex) == hashPass);
                     // console.log(hashPass)
                     if (!user) {
@@ -100,7 +100,7 @@ export const authOptions = {
             }
             return session;
         },
-        async jwt({ user , token }) {
+        async jwt({ user, token }) {
             if (user) {
                 return {
                     ...token,
@@ -119,7 +119,7 @@ export const authOptions = {
                 user.email = user.email
                 user.image = user.image
                 user.name = user.name,
-                user.role = user.role
+                    user.role = user.role
                 return true;
             }
             return false;

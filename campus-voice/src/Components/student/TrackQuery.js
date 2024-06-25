@@ -5,7 +5,7 @@ import Image from 'next/image'
 import React from 'react'
 import approved from "../../../public/emojies/Approved.png"
 
-export default function TrackQuery({queryId}) {
+export default function TrackQuery({ queryId }) {
     const queryStatusStyle = {
         resolved: {
             container: "shadow-green-400",
@@ -16,7 +16,7 @@ export default function TrackQuery({queryId}) {
             container: "shadow-red-400",
             text: "text-red-400",
             status: "bg-red-100 text-red-400"
-        }, 
+        },
         waiting: {
             container: "shadow-yellow-400",
             text: "text-yellow-500",
@@ -30,16 +30,16 @@ export default function TrackQuery({queryId}) {
                 <div className='w-60 flex justify-between'>
                     <span className="rounded-full bg-campus-green bg-opacity-10 px-4 pt-1 text-sm text-campus-green w-max flex items-center mb-7">Recent Query</span>
                     <span className="rounded-full bg-gray-500 bg-opacity-10 px-4 pt-1 text-sm text-gray-700 w-max flex items-center mb-7">
-                        <FontAwesomeIcon className='mb-1 mr-1' icon={faHashtag} /> 
+                        <FontAwesomeIcon className='mb-1 mr-1' icon={faHashtag} />
                         {queryId}
                     </span>
                 </div>
                 <h2 className="text-slate-900 text-3xl font-bold lg:text-4xl">Request for Water Cooler Repair</h2>
                 <div className='my-5 relative'>
-                    <p className="text-slate-700 line-clamp-2 max-w-lg">I hope this message finds you well. I am writing to report an issue with the water cooler located on the second floor of the Science Building, near the main lecture hall. The cooler has not been dispensing water for the past few days, which has caused inconvenience for many students and faculty members who rely on it during class breaks. 
+                    <p className="text-slate-700 line-clamp-2 max-w-lg">I hope this message finds you well. I am writing to report an issue with the water cooler located on the second floor of the Science Building, near the main lecture hall. The cooler has not been dispensing water for the past few days, which has caused inconvenience for many students and faculty members who rely on it during class breaks.
                     </p>
                     <p className='text-slate-700 cursor-pointer absolute right-0 bottom-0 block pr-4 pl-1 bg-white'>...
-                    <span className='text-campus-green ml-1'>View More <FontAwesomeIcon width={12} icon={faUpRightFromSquare} /></span>
+                        <span className='text-campus-green ml-1'>View More <FontAwesomeIcon width={12} icon={faUpRightFromSquare} /></span>
                     </p>
                 </div>
                 <div className='flex w-[490px] text-base justify-between'>
@@ -67,8 +67,8 @@ export default function TrackQuery({queryId}) {
                     </div>
                     <div className='w-full mt-4 flex items-center justify-between'>
                         <p className="text-slate-700 w-2/5"><FontAwesomeIcon width={17} icon={faSignal}></FontAwesomeIcon> <span className='ml-1'>Status:</span></p>
-                        {/* <span class="rounded-full bg-indigo-200 px-3 pt-1 py-0.5 text-sm font-medium text-indigo-600">Prending Approval</span> */}
-                        <span class={`rounded-full ${queryStatusStyle.resolved.status} px-3 pt-1 py-0.5 text-sm font-medium`}>Done</span>
+                        {/* <span className="rounded-full bg-indigo-200 px-3 pt-1 py-0.5 text-sm font-medium text-indigo-600">Prending Approval</span> */}
+                        <span className={`rounded-full ${queryStatusStyle.resolved.status} px-3 pt-1 py-0.5 text-sm font-medium`}>Done</span>
                     </div>
                     <div className='w-full mt-4 flex items-center justify-between'>
                         <p className="text-slate-700 w-2/5"><FontAwesomeIcon width={17} icon={faReplyAll}></FontAwesomeIcon> <span className='ml-1'>Response:</span></p>
