@@ -133,7 +133,6 @@ export default function TrackQueryList() {
                                     ))
                             }
 
-
                             <Link href="TrackQuery/5023232" className="flex justify-between w-full hover:bg-gray-100 cursor-pointer">
                                 <div className="w-[40%] whitespace-no-wrap py-4 text-base text-gray-900 sm:px-6">
                                     Queury Regarding Hostel Admission - Feb 2022
