@@ -6,12 +6,11 @@ import { faArrowUpRightFromSquare } from '@fortawesome/free-solid-svg-icons';
 
 const TableRows = () => {
     const queries = JSON.parse(localStorage.getItem("queries"));
-    console.log(queries)
     const currentDate = new Date();
     const formattedDate = currentDate.toLocaleDateString('en-US', {
-      day: '2-digit',
-      month: 'long',
-      year: 'numeric',
+        day: '2-digit',
+        month: 'long',
+        year: 'numeric',
     });
     return (
         <>
